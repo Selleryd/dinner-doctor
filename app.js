@@ -1,60 +1,23 @@
 "use strict";
 
 /**
- * Dinner Doctor — Local-first physiology readout (no APIs, no paid keys)
- * - Parses dinner text
- * - Scores physiology signals (0–100)
- * - Renders futuristic radar chart + ranked readout + upgrade ladder
+ * Dinner Doctor — Portion-aware physiology readout (no paid APIs)
+ * - Parse dinner text → show Portion Check panel
+ * - Portions drive the math (grams conversion)
+ * - Unknown items: user chooses a category (still scores accurately)
+ * - Large DB is loaded from foods.json (easy to expand)
  */
-
-// ----------------------------
-// Mini food knowledge base (expand anytime)
-// ----------------------------
-const FOOD_DB = [
-  // Proteins
-  { k: ["chicken", "chicken thigh", "chicken breast", "turkey"], tag: ["protein"], p: 32, c: 0, f: 8, fiber: 0, sugar: 0, sodium: 220, satfat: 2, refined: 0 },
-  { k: ["steak", "beef", "burger"], tag: ["protein"], p: 30, c: 0, f: 14, fiber: 0, sugar: 0, sodium: 260, satfat: 6, refined: 0 },
-  { k: ["salmon", "fish", "tuna"], tag: ["protein"], p: 28, c: 0, f: 12, fiber: 0, sugar: 0, sodium: 180, satfat: 2, refined: 0 },
-  { k: ["eggs", "omelet"], tag: ["protein"], p: 18, c: 2, f: 14, fiber: 0, sugar: 0, sodium: 220, satfat: 4, refined: 0 },
-  { k: ["tofu", "tempeh"], tag: ["protein"], p: 20, c: 6, f: 12, fiber: 3, sugar: 1, sodium: 200, satfat: 2, refined: 0 },
-  { k: ["beans", "lentils", "chickpeas"], tag: ["protein","fiber"], p: 16, c: 32, f: 2, fiber: 12, sugar: 2, sodium: 40, satfat: 0, refined: 0 },
-
-  // Carbs / grains
-  { k: ["white rice", "rice"], tag: ["carb"], p: 4, c: 45, f: 1, fiber: 1, sugar: 0, sodium: 5, satfat: 0, refined: 1 },
-  { k: ["brown rice"], tag: ["carb","fiber"], p: 5, c: 45, f: 2, fiber: 4, sugar: 0, sodium: 5, satfat: 0, refined: 0.4 },
-  { k: ["pasta", "spaghetti", "mac and cheese", "macaroni"], tag: ["carb"], p: 8, c: 48, f: 2, fiber: 2, sugar: 2, sodium: 150, satfat: 1, refined: 1 },
-  { k: ["quinoa"], tag: ["carb","fiber"], p: 8, c: 39, f: 4, fiber: 5, sugar: 1, sodium: 10, satfat: 0, refined: 0.2 },
-  { k: ["potato", "mashed potatoes", "fries"], tag: ["carb"], p: 4, c: 50, f: 6, fiber: 3, sugar: 2, sodium: 300, satfat: 2, refined: 0.7 },
-  { k: ["bread", "roll", "bun"], tag: ["carb"], p: 6, c: 35, f: 3, fiber: 2, sugar: 4, sodium: 280, satfat: 0.5, refined: 1 },
-
-  // Veg + fruit
-  { k: ["broccoli", "green beans", "salad", "spinach", "kale", "asparagus", "vegetables", "veggies"], tag: ["veg","fiber"], p: 3, c: 10, f: 0, fiber: 5, sugar: 2, sodium: 60, satfat: 0, refined: 0 },
-  { k: ["berries", "fruit", "apple", "banana"], tag: ["fruit","fiber"], p: 1, c: 20, f: 0, fiber: 4, sugar: 12, sodium: 5, satfat: 0, refined: 0 },
-
-  // Fats / extras
-  { k: ["olive oil", "avocado"], tag: ["fat"], p: 0, c: 0, f: 14, fiber: 2, sugar: 0, sodium: 5, satfat: 2, refined: 0 },
-  { k: ["butter", "cream"], tag: ["fat"], p: 0, c: 0, f: 12, fiber: 0, sugar: 0, sodium: 90, satfat: 7, refined: 0 },
-
-  // Treats / drinks
-  { k: ["ice cream", "brownie", "cake", "cookies", "dessert"], tag: ["dessert"], p: 4, c: 45, f: 12, fiber: 1, sugar: 30, sodium: 220, satfat: 7, refined: 1 },
-  { k: ["soda", "coke", "juice"], tag: ["sugary_drink"], p: 0, c: 40, f: 0, fiber: 0, sugar: 39, sodium: 40, satfat: 0, refined: 1 },
-  { k: ["diet soda", "zero sugar soda"], tag: ["drink"], p: 0, c: 0, f: 0, fiber: 0, sugar: 0, sodium: 40, satfat: 0, refined: 0 },
-
-  // Restaurant-ish
-  { k: ["pepperoni pizza", "pizza"], tag: ["restaurant","carb"], p: 18, c: 52, f: 18, fiber: 3, sugar: 6, sodium: 900, satfat: 8, refined: 1 },
-  { k: ["caesar salad", "caesar"], tag: ["veg"], p: 6, c: 12, f: 14, fiber: 3, sugar: 2, sodium: 480, satfat: 3, refined: 0.3 },
-];
 
 // ----------------------------
 // Modes
 // ----------------------------
 const MODES = {
-  none: { name: "Standard" },
-  t1d:  { name: "Type 1 Diabetes" },
-  heart:{ name: "Heart" },
-  gut:  { name: "Gut" },
-  muscle:{ name: "Muscle" },
-  cut:  { name: "Weight Loss" },
+  none:   { name: "Standard" },
+  t1d:    { name: "Type 1 Diabetes" },
+  heart:  { name: "Heart" },
+  gut:    { name: "Gut" },
+  muscle: { name: "Muscle" },
+  cut:    { name: "Weight Loss" },
 };
 
 let activeMode = "none";
@@ -68,6 +31,13 @@ const el = {
   mealInput: $("mealInput"),
   analyzeBtn: $("analyzeBtn"),
   parseLine: $("parseLine"),
+
+  portionCard: $("portionCard"),
+  portionRows: $("portionRows"),
+  portionScan: $("portionScan"),
+  portionBack: $("portionBack"),
+  portionClose: $("portionClose"),
+
   ddScore: $("ddScore"),
   miniProtein: $("miniProtein"),
   miniFiber: $("miniFiber"),
@@ -83,18 +53,79 @@ const el = {
 };
 
 // ----------------------------
+// Food DB loading (foods.json)
+// ----------------------------
+let FOODS = [];
+let FOODS_READY = loadFoods();
+
+async function loadFoods(){
+  try{
+    const res = await fetch("./foods.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("foods.json not found");
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error("foods.json must be an array");
+    FOODS = data;
+  }catch(e){
+    // Minimal fallback (app still runs)
+    FOODS = [
+      { id:"salmon", name:"Salmon", syn:["salmon","fish"], serving_g:140, units:{ "oz":28.35, "g":1, "serving":140 }, per_serving:{ p:28, c:0, f:12, fiber:0, sugar:0, sodium:120, satfat:2, refined:0 }},
+      { id:"mashed_potato", name:"Mashed potatoes", syn:["mashed potatoes","potatoes","potato"], serving_g:210, units:{ "cup":210, "g":1, "serving":210 }, per_serving:{ p:4, c:35, f:8, fiber:3, sugar:3, sodium:350, satfat:2, refined:0.6 }},
+      { id:"broccoli", name:"Broccoli", syn:["broccoli","veggies","vegetables"], serving_g:150, units:{ "cup":90, "g":1, "serving":150 }, per_serving:{ p:4, c:10, f:1, fiber:5, sugar:2, sodium:50, satfat:0, refined:0 }},
+      { id:"dessert_generic", name:"Dessert (generic)", syn:["cake","brownie","ice cream","cookies","dessert"], serving_g:90, units:{ "slice":90, "g":1, "serving":90 }, per_serving:{ p:4, c:45, f:12, fiber:1, sugar:30, sodium:200, satfat:7, refined:1 }},
+    ];
+  }
+  indexFoods();
+}
+
+// Quick index for matching
+let FOOD_INDEX = [];
+function indexFoods(){
+  FOOD_INDEX = FOODS.map(f => ({
+    food: f,
+    keys: (f.syn || []).map(normalizeText).concat([normalizeText(f.name || "")]).filter(Boolean)
+  }));
+}
+
+// ----------------------------
+// Unknown-item category defaults (so EVERY query can still be scored)
+// ----------------------------
+const CATEGORY_PROFILES = {
+  protein: { label:"Protein", serving_g:120, units:{ serving:120, g:1, oz:28.35, piece:120 }, per_serving:{ p:26, c:2, f:10, fiber:0, sugar:1, sodium:220, satfat:3, refined:0.1 }},
+  carb:    { label:"Carb", serving_g:180, units:{ serving:180, g:1, oz:28.35, cup:180, slice:40 }, per_serving:{ p:5, c:45, f:3, fiber:3, sugar:3, sodium:180, satfat:0.6, refined:0.9 }},
+  veg:     { label:"Vegetable", serving_g:150, units:{ serving:150, g:1, cup:90 }, per_serving:{ p:3, c:10, f:0.5, fiber:5, sugar:3, sodium:60, satfat:0, refined:0 }},
+  fruit:   { label:"Fruit", serving_g:150, units:{ serving:150, g:1, cup:150, piece:150 }, per_serving:{ p:1, c:22, f:0.2, fiber:4, sugar:15, sodium:5, satfat:0, refined:0 }},
+  dairy:   { label:"Dairy", serving_g:170, units:{ serving:170, g:1, cup:245 }, per_serving:{ p:12, c:12, f:6, fiber:0, sugar:10, sodium:140, satfat:3, refined:0.1 }},
+  fat:     { label:"Fat / Sauce", serving_g:14, units:{ serving:14, g:1, tbsp:14, tsp:5 }, per_serving:{ p:0, c:0, f:14, fiber:0, sugar:0, sodium:80, satfat:2, refined:0 }},
+  dessert: { label:"Dessert", serving_g:90, units:{ serving:90, g:1, slice:90, piece:90 }, per_serving:{ p:3, c:45, f:12, fiber:1, sugar:28, sodium:200, satfat:7, refined:1 }},
+  drink:   { label:"Drink", serving_g:355, units:{ serving:355, g:1, cup:240, can:355, bottle:500 }, per_serving:{ p:0, c:20, f:0, fiber:0, sugar:18, sodium:40, satfat:0, refined:1 }},
+  mixed:   { label:"Mixed dish", serving_g:350, units:{ serving:350, g:1, cup:240, bowl:350, plate:450 }, per_serving:{ p:18, c:50, f:18, fiber:5, sugar:6, sodium:700, satfat:5, refined:0.8 }},
+};
+
+const CATEGORY_LIST = [
+  ["mixed","Mixed dish"],
+  ["protein","Protein"],
+  ["carb","Carb"],
+  ["veg","Vegetable"],
+  ["fruit","Fruit"],
+  ["dairy","Dairy"],
+  ["fat","Fat / Sauce"],
+  ["dessert","Dessert"],
+  ["drink","Drink"],
+];
+
+// ----------------------------
 // Utilities
 // ----------------------------
-function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
 function round(n){ return Math.round(n); }
-function pct(n){ return `${clamp(Math.round(n), 0, 100)}%`; }
+function pct(n){ return `${clamp(Math.round(n),0,100)}%`; }
 
 function normalizeText(s){
   return (s || "")
     .toLowerCase()
     .replace(/[®™]/g,"")
     .replace(/[\(\)\[\]\{\}]/g," ")
-    .replace(/[^\w\s\+\-\,\.]/g," ")
+    .replace(/[^\w\s\+\-\,\.\/]/g," ")
     .replace(/\s+/g," ")
     .trim();
 }
@@ -108,19 +139,78 @@ function splitFoods(text){
   return t.split(",").map(s=>s.trim()).filter(Boolean);
 }
 
-// Find best matching food entry (simple heuristic: longest keyword match)
-function matchFood(token){
+// Parse portion patterns like: "2 slices pizza", "8 oz steak", "1.5 cups rice"
+function parsePortion(token){
   const t = normalizeText(token);
+
+  // e.g. "8oz", "8 oz", "1.5 cups", "2 slices"
+  const m = t.match(/^(\d+(\.\d+)?)\s*(g|gram|grams|oz|ounce|ounces|lb|pound|pounds|cup|cups|tbsp|tablespoon|tablespoons|tsp|teaspoon|teaspoons|slice|slices|piece|pieces|serving|servings|can|cans|bottle|bottles|bowl|bowls|plate|plates)\s+(.*)$/i);
+  if (!m) return { amount: 1, unit: "serving", name: token };
+
+  const amount = parseFloat(m[1]);
+  const rawUnit = (m[3] || "").toLowerCase();
+  const name = m[4] || token;
+
+  const unitMap = {
+    g:"g", gram:"g", grams:"g",
+    oz:"oz", ounce:"oz", ounces:"oz",
+    lb:"lb", pound:"lb", pounds:"lb",
+    cup:"cup", cups:"cup",
+    tbsp:"tbsp", tablespoon:"tbsp", tablespoons:"tbsp",
+    tsp:"tsp", teaspoon:"tsp", teaspoons:"tsp",
+    slice:"slice", slices:"slice",
+    piece:"piece", pieces:"piece",
+    serving:"serving", servings:"serving",
+    can:"can", cans:"can",
+    bottle:"bottle", bottles:"bottle",
+    bowl:"bowl", bowls:"bowl",
+    plate:"plate", plates:"plate",
+  };
+
+  return { amount: isFinite(amount) ? amount : 1, unit: unitMap[rawUnit] || "serving", name };
+}
+
+function escapeHtml(s){
+  return (s ?? "").toString()
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function hexToRgba(hex, a){
+  const h = (hex || "").trim();
+  if (!/^#?[0-9a-fA-F]{6}$/.test(h)) return `rgba(255,255,255,${a})`;
+  const x = h.startsWith("#") ? h.slice(1) : h;
+  const r = parseInt(x.slice(0,2),16);
+  const g = parseInt(x.slice(2,4),16);
+  const b = parseInt(x.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function toneColor(tone){
+  const root = getComputedStyle(document.documentElement);
+  if (tone === "bad") return root.getPropertyValue("--bad").trim();
+  if (tone === "warn") return root.getPropertyValue("--warn").trim();
+  return root.getPropertyValue("--good").trim();
+}
+
+// ----------------------------
+// Matching
+// ----------------------------
+function matchFood(name){
+  const t = normalizeText(name);
   let best = null;
   let bestLen = 0;
 
-  for (const item of FOOD_DB){
-    for (const key of item.k){
-      const k = normalizeText(key);
+  for (const row of FOOD_INDEX){
+    for (const k of row.keys){
+      if (!k) continue;
       if (t === k || t.includes(k) || k.includes(t)){
         const scoreLen = Math.min(t.length, k.length);
         if (scoreLen > bestLen){
-          best = item;
+          best = row.food;
           bestLen = scoreLen;
         }
       }
@@ -129,30 +219,135 @@ function matchFood(token){
   return best;
 }
 
-function severityLabel(metricName, score){
-  // For Satiety & Digestion: low is worse. For the other 3: high is worse.
-  const isGoodHigher = (metricName === "Satiety" || metricName === "Digestion");
+function guessCategory(name){
+  const t = normalizeText(name);
 
-  let badness = isGoodHigher ? (100 - score) : score;
+  // Quick heuristics to reduce friction for unknown items
+  if (/(soda|coke|cola|juice|lemonade|beer|wine|cocktail|tea|coffee|latte|smoothie)/.test(t)) return "drink";
+  if (/(cake|cookie|brownie|ice cream|dessert|candy|donut|chocolate|pie|cupcake)/.test(t)) return "dessert";
+  if (/(salad|broccoli|asparagus|spinach|kale|vegetable|veggies|carrot|green beans|zucchini|pepper|tomato|cucumber)/.test(t)) return "veg";
+  if (/(apple|banana|berries|strawberry|blueberry|grapes|orange|fruit)/.test(t)) return "fruit";
+  if (/(yogurt|milk|cheese|cottage|kefir)/.test(t)) return "dairy";
+  if (/(oil|butter|mayo|mayonnaise|cream|avocado|nuts|peanut butter|tahini)/.test(t)) return "fat";
+  if (/(rice|pasta|bread|roll|bun|potato|fries|quinoa|oats|tortilla|noodles)/.test(t)) return "carb";
+  if (/(chicken|beef|steak|fish|salmon|tuna|turkey|egg|tofu|tempeh|beans|lentils)/.test(t)) return "protein";
 
-  if (badness >= 70) return { label: "High", tone: "bad" };
-  if (badness >= 45) return { label: "Moderate", tone: "warn" };
-  return { label: "Low", tone: "good" };
-}
-
-function toneColor(tone){
-  if (tone === "bad") return getComputedStyle(document.documentElement).getPropertyValue("--bad").trim();
-  if (tone === "warn") return getComputedStyle(document.documentElement).getPropertyValue("--warn").trim();
-  return getComputedStyle(document.documentElement).getPropertyValue("--good").trim();
+  return "mixed";
 }
 
 // ----------------------------
-// Scoring model (heuristic, local-only)
+// Portion conversion
+// ----------------------------
+function unitToGrams(foodOrProfile, unit, amount){
+  const amt = isFinite(amount) && amount > 0 ? amount : 1;
+  const u = (unit || "serving").toLowerCase();
+
+  // direct grams
+  if (u === "g") return amt;
+
+  // oz/lb
+  if (u === "oz") return amt * 28.3495;
+  if (u === "lb") return amt * 453.592;
+
+  const map = foodOrProfile.units || {};
+  const gPer = map[u];
+
+  // If we know the unit for that food, use it
+  if (typeof gPer === "number" && isFinite(gPer) && gPer > 0) return amt * gPer;
+
+  // fallback to serving grams
+  const sg = foodOrProfile.serving_g || 100;
+  if (u === "serving") return amt * sg;
+
+  // last resort: treat unknown unit as serving
+  return amt * sg;
+}
+
+// ----------------------------
+// Analysis pipeline
+// ----------------------------
+let CURRENT_ITEMS = []; // portion rows model
+
+function parseDinnerToItems(text){
+  const tokens = splitFoods(text);
+
+  const hits = [];
+  const misses = [];
+
+  const items = tokens.map((tok, idx) => {
+    const p = parsePortion(tok);
+    const food = matchFood(p.name);
+    if (food){
+      hits.push(p.name);
+      return {
+        id: `i_${idx}`,
+        raw: tok,
+        name: p.name,
+        amount: p.amount,
+        unit: defaultUnitFor(food, p.unit),
+        known: true,
+        food,
+        category: null
+      };
+    } else {
+      misses.push(p.name);
+      const cat = guessCategory(p.name);
+      return {
+        id: `i_${idx}`,
+        raw: tok,
+        name: p.name,
+        amount: p.amount,
+        unit: defaultUnitFor(CATEGORY_PROFILES[cat], p.unit),
+        known: false,
+        food: null,
+        category: cat
+      };
+    }
+  });
+
+  return { items, hits, misses };
+}
+
+function defaultUnitFor(foodOrProfile, parsedUnit){
+  const u = (parsedUnit || "serving").toLowerCase();
+  const units = foodOrProfile.units || {};
+  if (u === "g" || u === "oz" || u === "lb") return u;
+  if (units[u]) return u;
+  if (units["serving"]) return "serving";
+  // pick any known unit
+  const first = Object.keys(units)[0];
+  return first || "serving";
+}
+
+function aggregateFromItems(items){
+  const agg = { p:0, c:0, f:0, fiber:0, sugar:0, sodium:0, satfat:0, refined:0 };
+
+  for (const it of items){
+    const base = it.known ? it.food : CATEGORY_PROFILES[it.category || "mixed"];
+    if (!base) continue;
+
+    const grams = unitToGrams(base, it.unit, it.amount);
+    const mult = grams / (base.serving_g || 100);
+
+    const src = it.known ? it.food.per_serving : base.per_serving;
+
+    agg.p      += (src.p || 0) * mult;
+    agg.c      += (src.c || 0) * mult;
+    agg.f      += (src.f || 0) * mult;
+    agg.fiber  += (src.fiber || 0) * mult;
+    agg.sugar  += (src.sugar || 0) * mult;
+    agg.sodium += (src.sodium || 0) * mult;
+    agg.satfat += (src.satfat || 0) * mult;
+    agg.refined+= (src.refined || 0) * mult;
+  }
+
+  return agg;
+}
+
+// ----------------------------
+// Scoring model (heuristic, portion-aware)
 // ----------------------------
 function scoreMeal(agg, mode){
-  // agg fields roughly represent: a "typical serving per recognized item"
-  // These are not medical/clinical numbers — they’re consistent heuristics for ranking meals.
-
   const protein = agg.p;
   const carbs   = agg.c;
   const fat     = agg.f;
@@ -160,98 +355,63 @@ function scoreMeal(agg, mode){
   const sugar   = agg.sugar;
   const sodium  = agg.sodium;
   const satfat  = agg.satfat;
-  const refined = agg.refined; // 0..n
+  const refined = agg.refined;
 
-  // Signals
-  // Satiety: protein + fiber + fat (moderate) minus sugar/refined overload
   let satiety =
-    30
-    + protein * 1.15
-    + fiber * 2.3
-    + Math.min(fat, 25) * 0.6
-    - sugar * 0.55
-    - refined * 7.0;
+    30 + protein * 1.05 + fiber * 2.4 + Math.min(fat, 28) * 0.55
+    - sugar * 0.55 - refined * 7.5;
 
-  // Crash risk: refined carbs + sugar, reduced by protein/fiber/fat
   let crash =
-    20
-    + refined * 12
-    + sugar * 0.85
-    + Math.max(0, carbs - 45) * 0.25
-    - protein * 0.75
-    - fiber * 1.6
-    - fat * 0.35;
+    18 + refined * 13 + sugar * 0.85 + Math.max(0, carbs - 60) * 0.22
+    - protein * 0.70 - fiber * 1.7 - fat * 0.30;
 
-  // Cravings: sugar/refined + low protein/fiber
   let cravings =
-    18
-    + refined * 10
-    + sugar * 0.9
-    - protein * 0.55
-    - fiber * 1.25
-    - Math.min(fat, 20) * 0.25;
+    16 + refined * 11 + sugar * 0.90
+    - protein * 0.55 - fiber * 1.30 - Math.min(fat, 20) * 0.20;
 
-  // Digestion: penalize very high fat/sat fat + low fiber + ultra-salty restaurant patterns
   let digestion =
-    55
-    + fiber * 1.4
-    - Math.max(0, fat - 25) * 0.9
-    - Math.max(0, satfat - 10) * 1.2
-    - Math.max(0, sodium - 900) * 0.01
-    - refined * 1.5;
+    55 + fiber * 1.35
+    - Math.max(0, fat - 30) * 0.85
+    - Math.max(0, satfat - 12) * 1.15
+    - Math.max(0, sodium - 1100) * 0.010
+    - refined * 1.3;
 
-  // Glucose volatility: sugar/refined + large carb load; buffered by protein/fiber/fat
   let glucose =
-    22
-    + refined * 14
-    + sugar * 0.95
-    + Math.max(0, carbs - 40) * 0.35
-    - protein * 0.55
-    - fiber * 1.75
-    - fat * 0.25;
+    20 + refined * 14 + sugar * 0.95 + Math.max(0, carbs - 55) * 0.33
+    - protein * 0.55 - fiber * 1.8 - fat * 0.22;
 
-  // Mode adjustments
-  if (mode === "t1d"){
-    glucose += 10; // tighten sensitivity
-    crash += 5;
-  }
+  if (mode === "t1d"){ glucose += 10; crash += 6; }
   if (mode === "heart"){
-    // sodium + satfat more important
-    crash += Math.max(0, sodium - 700) * 0.01;
-    digestion -= Math.max(0, satfat - 8) * 0.8;
+    crash += Math.max(0, sodium - 800) * 0.012;
+    digestion -= Math.max(0, satfat - 9) * 0.9;
   }
   if (mode === "gut"){
     digestion += fiber * 0.8;
-    // very low fiber feels "off"
-    digestion -= Math.max(0, 6 - fiber) * 2.0;
+    digestion -= Math.max(0, 7 - fiber) * 2.1;
   }
   if (mode === "muscle"){
-    satiety += Math.max(0, protein - 25) * 0.6;
-    cravings -= protein * 0.15;
+    satiety += Math.max(0, protein - 30) * 0.55;
+    cravings -= protein * 0.12;
   }
   if (mode === "cut"){
-    satiety += fiber * 0.6;
-    cravings += sugar * 0.2;
+    satiety += fiber * 0.55;
+    cravings += sugar * 0.18;
   }
 
-  // Clamp and orient:
-  satiety   = clamp(satiety, 0, 100);          // higher better
-  digestion = clamp(digestion, 0, 100);        // higher better
-  crash     = clamp(crash, 0, 100);            // higher worse
-  cravings  = clamp(cravings, 0, 100);         // higher worse
-  glucose   = clamp(glucose, 0, 100);          // higher worse
+  satiety   = clamp(satiety, 0, 100);
+  digestion = clamp(digestion, 0, 100);
+  crash     = clamp(crash, 0, 100);
+  cravings  = clamp(cravings, 0, 100);
+  glucose   = clamp(glucose, 0, 100);
 
-  // Composite Dinner Doctor score:
-  // reward satiety+digestion; penalize crash+cravings+glucose
-  const dd =
-    clamp(
-      0.34*satiety +
-      0.22*digestion +
-      0.14*(100 - crash) +
-      0.15*(100 - cravings) +
-      0.15*(100 - glucose),
-      0, 100
-    );
+  const dd = clamp(
+    0.34*satiety +
+    0.22*digestion +
+    0.14*(100 - crash) +
+    0.15*(100 - cravings) +
+    0.15*(100 - glucose),
+    0, 100
+  );
 
   return {
     dd: round(dd),
@@ -262,37 +422,26 @@ function scoreMeal(agg, mode){
       { name: "Digestion", value: round(digestion), better: "higher" },
       { name: "Glucose volatility", value: round(glucose), better: "lower" },
     ],
-    anchors: {
-      protein: protein,
-      fiber: fiber,
-      sugar: sugar,
-      sodium: sodium,
-      refined: refined,
-      satfat: satfat,
-      carbs: carbs,
-      fat: fat
-    }
+    anchors: { protein, fiber, sugar, sodium, refined, satfat, carbs, fat }
   };
 }
 
 // ----------------------------
-// Best move + ladder
+// Best move + ladder (portion-aware)
 // ----------------------------
 function bestMoveAndLadder(anchors, mode){
-  // Decide biggest lever
-  const lowProtein = anchors.protein < 25;
-  const lowFiber   = anchors.fiber < 6;
-  const highSugar  = anchors.sugar > 18;
-  const highRefined = anchors.refined > 1.2;
-  const highSodium = anchors.sodium > 900;
+  const lowProtein = anchors.protein < 28;
+  const lowFiber   = anchors.fiber < 8;
+  const highSugar  = anchors.sugar > 22;
+  const highRefined= anchors.refined > 1.4;
+  const highSodium = anchors.sodium > 1100;
 
-  // Weighted priority depending on mode
   const priorities = [];
   priorities.push({ key:"fiber", score: (lowFiber? 100:0) + (mode==="gut"? 30:0) + (mode==="cut"? 15:0) });
-  priorities.push({ key:"protein", score: (lowProtein? 95:0) + (mode==="muscle"? 25:0) });
-  priorities.push({ key:"sugar", score: (highSugar? 90:0) + (mode==="t1d"? 35:0) + (mode==="cut"? 10:0) });
-  priorities.push({ key:"refined", score: (highRefined? 85:0) + (mode==="t1d"? 30:0) });
-  priorities.push({ key:"sodium", score: (highSodium? 80:0) + (mode==="heart"? 40:0) });
+  priorities.push({ key:"protein", score: (lowProtein? 96:0) + (mode==="muscle"? 25:0) });
+  priorities.push({ key:"sugar", score: (highSugar? 92:0) + (mode==="t1d"? 35:0) + (mode==="cut"? 10:0) });
+  priorities.push({ key:"refined", score: (highRefined? 86:0) + (mode==="t1d"? 28:0) });
+  priorities.push({ key:"sodium", score: (highSodium? 82:0) + (mode==="heart"? 40:0) });
 
   priorities.sort((a,b)=>b.score-a.score);
   const top = priorities[0]?.key || "fiber";
@@ -301,115 +450,102 @@ function bestMoveAndLadder(anchors, mode){
   let ladder = [];
 
   if (top === "fiber"){
-    oneBest = "Add a fiber + color anchor: 2 cups veggies or a side salad kit (this stabilizes fullness, cravings, and crash risk).";
+    oneBest = "Add a fiber + color anchor: 2 cups vegetables or a side salad (this stabilizes satiety, cravings, and crash risk).";
     ladder = [
-      { name:"Level 1 (zero-cook)", delta:"+8", text:"Add a bagged salad or raw veggies + a piece of fruit." },
-      { name:"Level 2 (one-step)", delta:"+13", text:"Add beans/lentils OR swap to a higher-fiber carb (brown rice, quinoa, whole grain)." },
-      { name:"Level 3 (chef)", delta:"+18", text:"Build a ‘half-plate plants’ dinner: roast veg + add legumes + keep dessert smaller or later." },
+      { name:"Level 1 (zero-cook)", delta:"+8",  text:"Add bagged salad or raw veg + fruit." },
+      { name:"Level 2 (one-step)",  delta:"+13", text:"Add beans/lentils OR swap to higher-fiber carb (quinoa/brown rice/whole grain)." },
+      { name:"Level 3 (chef)",      delta:"+18", text:"Half-plate plants + protein first; keep dessert smaller or later." },
     ];
   } else if (top === "protein"){
-    oneBest = "Add a protein anchor: aim for a palm-sized portion (or beans/tofu) to improve satiety and reduce cravings later.";
+    oneBest = "Add a protein anchor: aim for ~25–35g protein at dinner to improve satiety and reduce late cravings.";
     ladder = [
-      { name:"Level 1 (zero-cook)", delta:"+7", text:"Add Greek yogurt/cottage cheese OR a protein shake/smoothie on the side." },
-      { name:"Level 2 (one-step)", delta:"+12", text:"Add eggs, tofu, chicken, tuna, or beans to the meal." },
-      { name:"Level 3 (chef)", delta:"+17", text:"Re-plate: protein first, then veg, then carb — keep dessert smaller or paired with protein." },
+      { name:"Level 1 (zero-cook)", delta:"+7",  text:"Add Greek yogurt/cottage cheese or a protein shake." },
+      { name:"Level 2 (one-step)",  delta:"+12", text:"Add eggs, tofu, chicken, tuna, or beans." },
+      { name:"Level 3 (chef)",      delta:"+17", text:"Re-plate: protein + veg first; carb second; dessert smaller or paired." },
     ];
   } else if (top === "sugar"){
-    oneBest = "Neutralize added sugar: move dessert to a smaller portion, and pair it with protein/fiber to reduce volatility and cravings.";
+    oneBest = "Neutralize added sugar: reduce dessert portion and pair it with protein/fiber to reduce volatility and cravings.";
     ladder = [
-      { name:"Level 1 (zero-cook)", delta:"+8", text:"Swap soda/juice for water/diet option; keep dessert smaller." },
-      { name:"Level 2 (one-step)", delta:"+13", text:"Pair dessert with Greek yogurt/berries or nuts; add salad/veg first." },
-      { name:"Level 3 (chef)", delta:"+18", text:"Dessert redesign: higher-protein + higher-fiber version (or split dessert timing)." },
+      { name:"Level 1 (zero-cook)", delta:"+8",  text:"Swap sugary drink for water/diet option; keep dessert smaller." },
+      { name:"Level 2 (one-step)",  delta:"+13", text:"Pair dessert with Greek yogurt/berries or nuts; eat veg first." },
+      { name:"Level 3 (chef)",      delta:"+18", text:"Dessert redesign: higher-protein/higher-fiber version or split timing." },
     ];
   } else if (top === "refined"){
-    oneBest = "Upgrade carb quality: swap refined carbs for higher-fiber alternatives to lower crash risk and glucose volatility.";
+    oneBest = "Upgrade carb quality: swap refined carbs for higher-fiber options to lower crash risk and glucose volatility.";
     ladder = [
-      { name:"Level 1 (zero-cook)", delta:"+6", text:"Add a fiber side (salad/veg) before the carb-heavy part of the meal." },
-      { name:"Level 2 (one-step)", delta:"+12", text:"Switch to brown rice/quinoa/whole grain; reduce the refined portion slightly." },
-      { name:"Level 3 (chef)", delta:"+16", text:"Rebuild the plate: half veg, palm protein, fist carb — dessert smaller/later." },
+      { name:"Level 1 (zero-cook)", delta:"+6",  text:"Add veg/salad before the carb-heavy portion." },
+      { name:"Level 2 (one-step)",  delta:"+12", text:"Switch to quinoa/brown rice/whole grain; slightly reduce refined portion." },
+      { name:"Level 3 (chef)",      delta:"+16", text:"Rebuild plate: half veg, palm protein, fist carb; dessert smaller/later." },
     ];
-  } else { // sodium
-    oneBest = "Lower sodium load: restaurant-style sodium drives thirst, bloating, and rebound cravings — dilute with fresh volume.";
+  } else {
+    oneBest = "Lower sodium load: high sodium drives thirst/bloating and can increase rebound cravings—dilute with fresh volume.";
     ladder = [
-      { name:"Level 1 (zero-cook)", delta:"+6", text:"Add a big fresh side (salad, fruit) + extra water; skip salty add-ons." },
-      { name:"Level 2 (one-step)", delta:"+11", text:"Choose lower-sodium versions / rinse canned items / use herbs + acid (lemon) instead." },
-      { name:"Level 3 (chef)", delta:"+15", text:"Cook a ‘clean base’ protein + veg; keep the salty item as a smaller accent." },
+      { name:"Level 1 (zero-cook)", delta:"+6",  text:"Add a big fresh side + extra water; skip salty add-ons." },
+      { name:"Level 2 (one-step)",  delta:"+11", text:"Choose lower-sodium versions; rinse canned items; use herbs + lemon." },
+      { name:"Level 3 (chef)",      delta:"+15", text:"Cook a clean base protein + veg; keep salty items as accents." },
     ];
   }
 
-  // Mode footnotes baked into copy (subtle)
-  if (mode === "t1d"){
-    oneBest += " (T1D mode prioritizes volatility buffering: protein + fiber first.)";
-  }
-  if (mode === "heart"){
-    oneBest += " (Heart mode emphasizes sodium + saturated fat.)";
-  }
+  if (mode === "t1d") oneBest += " (T1D mode prioritizes volatility buffering: protein + fiber first.)";
+  if (mode === "heart") oneBest += " (Heart mode emphasizes sodium + saturated fat.)";
 
   return { oneBest, ladder };
 }
 
 // ----------------------------
-// Parse + aggregate
+// Readout helpers
 // ----------------------------
-function analyzeDinner(text, mode){
-  const tokens = splitFoods(text);
+function severityLabel(metricName, score){
+  const isGoodHigher = (metricName === "Satiety" || metricName === "Digestion");
+  const badness = isGoodHigher ? (100 - score) : score;
+  if (badness >= 70) return { label: "High", tone: "bad" };
+  if (badness >= 45) return { label: "Moderate", tone: "warn" };
+  return { label: "Low", tone: "good" };
+}
 
-  const hits = [];
-  const misses = [];
-
-  // Aggregate nutrients from matched items (simple additive)
-  const agg = { p:0, c:0, f:0, fiber:0, sugar:0, sodium:0, satfat:0, refined:0, tags:new Set() };
-
-  for (const tok of tokens){
-    const match = matchFood(tok);
-    if (!match){
-      misses.push(tok);
-      continue;
-    }
-    hits.push({ tok, match });
-
-    agg.p += match.p;
-    agg.c += match.c;
-    agg.f += match.f;
-    agg.fiber += match.fiber;
-    agg.sugar += match.sugar;
-    agg.sodium += match.sodium;
-    agg.satfat += match.satfat;
-    agg.refined += match.refined;
-    (match.tag || []).forEach(t => agg.tags.add(t));
+function metricInterpretation(metric, anchors, mode){
+  const v = metric.value;
+  switch(metric.name){
+    case "Satiety":
+      if (v >= 75) return "Steady fullness likely; low snack-pressure later.";
+      if (v >= 55) return "Decent fullness, but could fade if fiber/protein is light.";
+      return "Hunger rebound likely; add protein/fiber anchor.";
+    case "Energy crash risk":
+      if (v >= 75) return "Crash risk elevated; buffer with protein/fiber; reduce refined/sugar.";
+      if (v >= 55) return "Some dip risk; fiber/protein can stabilize.";
+      return "Energy likely steady.";
+    case "Cravings":
+      if (v >= 75) return "Cravings likely later (often sugar/refined-driven).";
+      if (v >= 55) return "Moderate craving risk; improve protein/fiber pairing.";
+      return "Cravings likely low.";
+    case "Digestion":
+      if (v >= 75) return "Generally digestion-friendly.";
+      if (v >= 55) return "Okay, but heavy fat/sodium can feel ‘weighed down.’";
+      return "Heaviness/bloat risk; lighten fat + raise fiber.";
+    case "Glucose volatility":
+      if (mode === "t1d" && v >= 65) return "T1D mode flags higher volatility; protein/fiber first.";
+      if (v >= 75) return "Volatility likely high; reduce refined/sugar or add fiber/protein.";
+      if (v >= 55) return "Moderate volatility; pairing improves stability.";
+      return "Likely stable.";
+    default:
+      return "";
   }
-
-  // Heuristic “portion realism” normalization:
-  // If many items recognized, scale down a bit so scores don’t explode
-  const n = Math.max(1, hits.length);
-  const scale = n <= 3 ? 1 : (n <= 5 ? 0.85 : 0.75);
-
-  for (const k of ["p","c","f","fiber","sugar","sodium","satfat","refined"]){
-    agg[k] *= scale;
-  }
-
-  const scored = scoreMeal(agg, mode);
-
-  return { tokens, hits, misses, agg, scored };
 }
 
 // ----------------------------
-// Radar chart rendering (canvas)
+// Radar chart (canvas)
 // ----------------------------
 function drawRadar(canvas, metrics){
   const ctx = canvas.getContext("2d");
   const w = canvas.width;
   const h = canvas.height;
 
-  // Background
   ctx.clearRect(0,0,w,h);
 
-  // Colors from CSS
   const root = getComputedStyle(document.documentElement);
   const stroke = root.getPropertyValue("--stroke").trim();
   const stroke2 = root.getPropertyValue("--stroke2").trim();
   const cyan = root.getPropertyValue("--cyan").trim();
-  const purple = root.getPropertyValue("--purple").trim();
   const text = root.getPropertyValue("--text").trim();
   const muted = root.getPropertyValue("--muted2").trim();
 
@@ -417,7 +553,6 @@ function drawRadar(canvas, metrics){
   const cy = h/2 + 8;
   const r = Math.min(w,h) * 0.34;
 
-  // Grid rings
   ctx.save();
   ctx.translate(cx,cy);
 
@@ -430,7 +565,6 @@ function drawRadar(canvas, metrics){
     ctx.stroke();
   }
 
-  // Axes
   const N = metrics.length;
   for (let i=0;i<N;i++){
     const a = (Math.PI*2) * (i/N) - Math.PI/2;
@@ -442,7 +576,6 @@ function drawRadar(canvas, metrics){
     ctx.stroke();
   }
 
-  // Labels
   ctx.font = "700 14px ui-sans-serif, system-ui, -apple-system, Segoe UI";
   ctx.fillStyle = muted;
   for (let i=0;i<N;i++){
@@ -459,8 +592,6 @@ function drawRadar(canvas, metrics){
     ctx.fillText(name, lx, ly);
   }
 
-  // Polygon points:
-  // For “worse when higher” metrics, invert on the chart so “bigger = better” visually
   const points = metrics.map((m,i)=>{
     const a = (Math.PI*2) * (i/N) - Math.PI/2;
     const val = (m.better === "lower") ? (100 - m.value) : m.value;
@@ -468,24 +599,20 @@ function drawRadar(canvas, metrics){
     return { x: Math.cos(a)*rr, y: Math.sin(a)*rr, a, val };
   });
 
-  // Glow polygon
   ctx.beginPath();
   points.forEach((p,i)=> i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
   ctx.closePath();
 
-  // Fill gradient
   const grad = ctx.createLinearGradient(-r, -r, r, r);
   grad.addColorStop(0, "rgba(121,198,255,.28)");
   grad.addColorStop(1, "rgba(176,140,255,.28)");
   ctx.fillStyle = grad;
   ctx.fill();
 
-  // Stroke
   ctx.strokeStyle = "rgba(121,198,255,.85)";
   ctx.lineWidth = 2;
   ctx.stroke();
 
-  // Nodes
   for (const p of points){
     ctx.beginPath();
     ctx.arc(p.x,p.y,4,0,Math.PI*2);
@@ -499,7 +626,6 @@ function drawRadar(canvas, metrics){
     ctx.stroke();
   }
 
-  // Center label
   ctx.fillStyle = text;
   ctx.font = "900 12px ui-sans-serif, system-ui";
   ctx.textAlign = "center";
@@ -508,30 +634,138 @@ function drawRadar(canvas, metrics){
 }
 
 // ----------------------------
-// UI renderers
+// UI: Portion panel rendering
 // ----------------------------
-function renderAll(result){
-  const { hits, misses, agg, scored } = result;
+function showPortionPanel(items, hits, misses){
+  CURRENT_ITEMS = items;
 
-  // Parse line
-  const recognized = hits.map(h=>h.tok).join(", ");
-  const missed = misses.length ? ` • Unrecognized: ${misses.join(", ")}` : "";
-  el.parseLine.textContent = hits.length
-    ? `Recognized: ${recognized}${missed}`
-    : `Try a simpler description (e.g., “salmon, rice, broccoli”).`;
+  const recognized = hits.length ? `Recognized: ${hits.join(", ")}` : "";
+  const unknown = misses.length ? ` • Unknown: ${misses.join(", ")} (pick category)` : "";
+  el.parseLine.textContent = (recognized || "No recognizable items found.") + unknown;
 
+  el.portionCard.classList.remove("hidden");
+
+  el.portionRows.innerHTML = items.map(it => {
+    const tagText = it.known ? `Matched: ${escapeHtml(it.food.name)}` : `Unknown → ${CATEGORY_PROFILES[it.category]?.label || "Mixed dish"}`;
+    const dot = it.known ? "var(--good)" : "var(--warn)";
+
+    const unitOptions = buildUnitOptions(it);
+    const catOptions = it.known ? "" : `
+      <div class="pCell">
+        <div class="pLabel">Category</div>
+        <select class="pSelect" data-field="category" data-id="${it.id}">
+          ${CATEGORY_LIST.map(([k,label])=>`<option value="${k}" ${k===it.category?"selected":""}>${label}</option>`).join("")}
+        </select>
+      </div>
+    `;
+
+    return `
+      <div class="pRow" data-row="${it.id}">
+        <div>
+          <div class="pName">${escapeHtml(it.name)}</div>
+          <div class="pMeta">
+            <span class="pTag"><span class="pDot" style="background:${dot};"></span>${tagText}</span>
+          </div>
+        </div>
+
+        <div class="pCell">
+          <div class="pLabel">Amount</div>
+          <input class="pInput" data-field="amount" data-id="${it.id}" type="number" inputmode="decimal" min="0.1" step="0.1" value="${it.amount}" />
+        </div>
+
+        <div class="pCell">
+          <div class="pLabel">Unit</div>
+          <select class="pSelect" data-field="unit" data-id="${it.id}">
+            ${unitOptions}
+          </select>
+        </div>
+
+        ${catOptions || `<div class="pCell"><div class="pLabel">Category</div><div class="pMeta" style="padding:10px 10px;border-radius:12px;background:rgba(5,8,18,.35);border:1px solid rgba(255,255,255,.08);font-weight:900;">Known</div></div>`}
+      </div>
+    `;
+  }).join("");
+
+  // Wire per-row category updates (so unit list updates too)
+  el.portionRows.querySelectorAll('select[data-field="category"]').forEach(sel=>{
+    sel.addEventListener("change", ()=>{
+      const id = sel.getAttribute("data-id");
+      const row = CURRENT_ITEMS.find(x=>x.id===id);
+      if (!row) return;
+      row.category = sel.value;
+      // update unit default if needed
+      row.unit = defaultUnitFor(CATEGORY_PROFILES[row.category], row.unit);
+      // re-render just units dropdown for that row
+      const rowEl = el.portionRows.querySelector(`[data-row="${id}"]`);
+      const unitSel = rowEl?.querySelector('select[data-field="unit"]');
+      if (unitSel){
+        unitSel.innerHTML = buildUnitOptions(row);
+        unitSel.value = row.unit;
+      }
+    });
+  });
+}
+
+function buildUnitOptions(item){
+  const base = item.known ? item.food : CATEGORY_PROFILES[item.category || "mixed"];
+  const units = Object.keys(base.units || {});
+  // Always include g/oz/lb
+  const all = Array.from(new Set(["serving", "cup", "tbsp", "tsp", "slice", "piece", "can", "bottle", "bowl", "plate", ...units, "g", "oz", "lb"]));
+  const nice = {
+    serving:"serving", g:"g", oz:"oz", lb:"lb",
+    cup:"cup", tbsp:"tbsp", tsp:"tsp",
+    slice:"slice", piece:"piece",
+    can:"can", bottle:"bottle", bowl:"bowl", plate:"plate"
+  };
+
+  const allowed = all.filter(u=>{
+    if (u==="g" || u==="oz" || u==="lb") return true;
+    return (base.units && base.units[u]) || u==="serving";
+  });
+
+  return allowed.map(u=>{
+    const label = nice[u] || u;
+    const sel = (u === item.unit) ? "selected" : "";
+    return `<option value="${u}" ${sel}>${label}</option>`;
+  }).join("");
+}
+
+function readPortionPanelToItems(){
+  const items = CURRENT_ITEMS.map(it => ({...it}));
+
+  // pull values
+  el.portionRows.querySelectorAll("[data-field]").forEach(node=>{
+    const field = node.getAttribute("data-field");
+    const id = node.getAttribute("data-id");
+    const it = items.find(x=>x.id===id);
+    if (!it) return;
+
+    if (field === "amount"){
+      it.amount = parseFloat(node.value);
+      if (!isFinite(it.amount) || it.amount <= 0) it.amount = 1;
+    } else if (field === "unit"){
+      it.unit = node.value;
+    } else if (field === "category"){
+      it.category = node.value;
+    }
+  });
+
+  return items;
+}
+
+// ----------------------------
+// Rendering: scores + readout
+// ----------------------------
+function renderAll(scored, agg){
   // Mini stats
   el.ddScore.textContent = scored.dd;
-  el.miniProtein.textContent = agg.p >= 25 ? "Strong" : agg.p >= 15 ? "Okay" : "Low";
-  el.miniFiber.textContent = agg.fiber >= 8 ? "Strong" : agg.fiber >= 5 ? "Okay" : "Low";
-  el.miniSugar.textContent = agg.sugar <= 10 ? "Low" : agg.sugar <= 20 ? "Moderate" : "High";
-  el.miniSodium.textContent = agg.sodium <= 700 ? "Low" : agg.sodium <= 1000 ? "Moderate" : "High";
+  el.miniProtein.textContent = agg.p >= 30 ? "Strong" : agg.p >= 18 ? "Okay" : "Low";
+  el.miniFiber.textContent = agg.fiber >= 10 ? "Strong" : agg.fiber >= 6 ? "Okay" : "Low";
+  el.miniSugar.textContent = agg.sugar <= 12 ? "Low" : agg.sugar <= 24 ? "Moderate" : "High";
+  el.miniSodium.textContent = agg.sodium <= 800 ? "Low" : agg.sodium <= 1200 ? "Moderate" : "High";
 
-  // Signal label
   const signal = scored.dd >= 78 ? "Excellent" : scored.dd >= 62 ? "Strong" : scored.dd >= 48 ? "Mixed" : "Needs work";
   el.signalLabel.textContent = signal;
 
-  // Best move + ladder
   const { oneBest, ladder } = bestMoveAndLadder(scored.anchors, activeMode);
   el.bestMoveText.textContent = oneBest;
 
@@ -545,7 +779,7 @@ function renderAll(result){
     </div>
   `).join("");
 
-  // Readout table (ranked by "badness")
+  // Readout table ranked by badness
   const rows = scored.metrics
     .map(m=>{
       const isGoodHigher = (m.name === "Satiety" || m.name === "Digestion");
@@ -557,6 +791,8 @@ function renderAll(result){
   el.readoutBody.innerHTML = rows.map(m=>{
     const sev = severityLabel(m.name, m.value);
     const c = toneColor(sev.tone);
+    const barVal = (m.better==="lower") ? (100 - m.value) : m.value;
+
     return `
       <tr>
         <td>
@@ -565,7 +801,7 @@ function renderAll(result){
             <div>
               <div style="font-weight:900;">${escapeHtml(m.name)}</div>
               <div class="sev">${escapeHtml(metricInterpretation(m, scored.anchors, activeMode))}</div>
-              <div class="bar"><i style="width:${pct(m.better==="lower" ? (100-m.value) : m.value)};"></i></div>
+              <div class="bar"><i style="width:${pct(barVal)};"></i></div>
             </div>
           </div>
         </td>
@@ -575,62 +811,11 @@ function renderAll(result){
     `;
   }).join("");
 
-  // Radar chart
   drawRadar(el.radar, scored.metrics);
 }
 
-function metricInterpretation(metric, anchors, mode){
-  const v = metric.value;
-  switch(metric.name){
-    case "Satiety":
-      if (v >= 75) return "Likely steady fullness; low snack-pressure later.";
-      if (v >= 55) return "Decent fullness, but could fade if fiber/protein is light.";
-      return "Hunger rebound likely; add protein/fiber anchor.";
-    case "Energy crash risk":
-      if (v >= 75) return "Crash risk elevated; refine/sugar buffering needed.";
-      if (v >= 55) return "Some dip risk; fiber/protein can stabilize.";
-      return "Energy likely steady.";
-    case "Cravings":
-      if (v >= 75) return "Cravings likely later (often sugar/refined-driven).";
-      if (v >= 55) return "Moderate craving risk; improve protein/fiber pairing.";
-      return "Cravings likely low.";
-    case "Digestion":
-      if (v >= 75) return "Generally digestion-friendly.";
-      if (v >= 55) return "Okay, but heavy fat/sodium can feel ‘weighed down.’";
-      return "Heaviness/bloat risk; consider lighter fat + more fiber.";
-    case "Glucose volatility":
-      if (mode === "t1d" && v >= 65) return "T1D mode flags higher volatility; buffer with protein/fiber first.";
-      if (v >= 75) return "Volatility likely high; reduce refined/sugar or add fiber/protein.";
-      if (v >= 55) return "Moderate volatility; pairing improves stability.";
-      return "Likely stable.";
-    default:
-      return "";
-  }
-}
-
-function escapeHtml(s){
-  return (s ?? "").toString()
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-// Convert hex colors to rgba for box-shadow
-function hexToRgba(hex, a){
-  const h = (hex || "").trim();
-  // supports #RRGGBB
-  if (!/^#?[0-9a-fA-F]{6}$/.test(h)) return `rgba(255,255,255,${a})`;
-  const x = h.startsWith("#") ? h.slice(1) : h;
-  const r = parseInt(x.slice(0,2),16);
-  const g = parseInt(x.slice(2,4),16);
-  const b = parseInt(x.slice(4,6),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-
 // ----------------------------
-// Mode toggles + events
+// Events
 // ----------------------------
 function setMode(mode){
   activeMode = MODES[mode] ? mode : "none";
@@ -641,20 +826,31 @@ function setMode(mode){
     btn.setAttribute("aria-pressed", is ? "true" : "false");
   });
 
-  // Re-run if there is input
-  const t = el.mealInput.value.trim();
-  if (t) runAnalysis();
+  // If we already have parsed items visible, re-run scan using current portion inputs
+  if (!el.portionCard.classList.contains("hidden") && CURRENT_ITEMS.length){
+    runScanFromPortions();
+  }
 }
 
-function runAnalysis(){
+async function runAnalyze(){
+  await FOODS_READY;
+
   const text = el.mealInput.value.trim();
   if (!text){
     el.parseLine.textContent = "Type a dinner first (e.g., “salmon, rice, broccoli”).";
     return;
   }
-  const result = analyzeDinner(text, activeMode);
-  renderAll(result);
+
+  const { items, hits, misses } = parseDinnerToItems(text);
+  showPortionPanel(items, hits, misses);
   syncShareUrl(text, activeMode);
+}
+
+function runScanFromPortions(){
+  const items = readPortionPanelToItems();
+  const agg = aggregateFromItems(items);
+  const scored = scoreMeal(agg, activeMode);
+  renderAll(scored, agg);
 }
 
 function syncShareUrl(text, mode){
@@ -671,7 +867,6 @@ function copyShareLink(){
     el.copyLinkBtn.textContent = "Copied!";
     setTimeout(()=> el.copyLinkBtn.textContent = "Copy share link", 1200);
   }).catch(()=>{
-    // Fallback
     const ta = document.createElement("textarea");
     ta.value = url;
     document.body.appendChild(ta);
@@ -683,33 +878,46 @@ function copyShareLink(){
   });
 }
 
-// Wire up
-el.analyzeBtn.addEventListener("click", runAnalysis);
-el.mealInput.addEventListener("keydown", (e)=>{ if (e.key === "Enter") runAnalysis(); });
+el.analyzeBtn.addEventListener("click", runAnalyze);
+el.mealInput.addEventListener("keydown", (e)=>{ if (e.key === "Enter") runAnalyze(); });
 el.copyLinkBtn.addEventListener("click", copyShareLink);
+
+el.portionScan.addEventListener("click", runScanFromPortions);
+el.portionBack.addEventListener("click", ()=>{
+  el.portionCard.classList.add("hidden");
+  el.mealInput.focus();
+});
+el.portionClose.addEventListener("click", ()=>{
+  el.portionCard.classList.add("hidden");
+});
 
 document.querySelectorAll(".toggle").forEach(btn=>{
   btn.addEventListener("click", ()=> setMode(btn.getAttribute("data-mode")));
 });
 
 document.querySelectorAll(".chipBtn").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
+  btn.addEventListener("click", async ()=>{
     el.mealInput.value = btn.getAttribute("data-example");
-    runAnalysis();
+    await runAnalyze();
   });
 });
 
-// Deep-link support: ?meal=...&mode=...
-(function bootFromUrl(){
+// Boot from URL (?meal=...&mode=...)
+(async function bootFromUrl(){
+  await FOODS_READY;
+
   const params = new URLSearchParams(location.search);
   const meal = params.get("meal");
   const mode = params.get("mode");
+
   if (mode) setMode(mode);
+
   if (meal){
     el.mealInput.value = meal;
-    runAnalysis();
+    await runAnalyze();
+    // auto-run scan once with defaults (user can refine)
+    runScanFromPortions();
   } else {
-    // nice default drawing
     drawRadar(el.radar, [
       { name:"Satiety", value:55, better:"higher" },
       { name:"Energy crash risk", value:50, better:"lower" },
