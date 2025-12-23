@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dinner Doctor</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <meta name="description" content="Dinner Doctor: a futuristic dietitian-style physiology readout for your dinner—no accounts, no tracking, no APIs." />
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div class="title">
+        <div class="kicker">Dinner Doctor • Physiology Readout</div>
+        <h1>What are you having for dinner?</h1>
+        <p class="sub">Type your dinner like a human. Dinner Doctor returns a futuristic “how you’ll feel” chart plus the single best upgrade (no accounts, no tracking, no paid APIs).</p>
+      </div>
+
+      <div class="pill" title="Local-first. No server required.">
+        <span class="dot"></span>
+        <span>Local-first • Free • Private</span>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="content">
+        <div class="topGrid">
+          <div class="inputCard">
+            <label class="label" for="mealInput">Dinner (plain text)</label>
+            <div class="inputRow">
+              <input id="mealInput" class="input" placeholder="Example: salmon, rice, broccoli, and ice cream" autocomplete="off" />
+              <button id="analyzeBtn" class="btn primary" type="button">Analyze</button>
+            </div>
+
+            <div class="toggles">
+              <button class="toggle" type="button" data-mode="none" aria-pressed="true">Standard</button>
+              <button class="toggle" type="button" data-mode="t1d" aria-pressed="false">Type 1 Diabetes</button>
+              <button class="toggle" type="button" data-mode="heart" aria-pressed="false">Heart</button>
+              <button class="toggle" type="button" data-mode="gut" aria-pressed="false">Gut</button>
+              <button class="toggle" type="button" data-mode="muscle" aria-pressed="false">Muscle</button>
+              <button class="toggle" type="button" data-mode="cut" aria-pressed="false">Weight Loss</button>
+            </div>
+
+            <div class="examples">
+              <span class="examplesLabel">Quick examples:</span>
+              <button class="chipBtn" type="button" data-example="Chicken thighs, mashed potatoes, green beans, and a brownie">Chicken thighs dinner</button>
+              <button class="chipBtn" type="button" data-example="2 slices pepperoni pizza + caesar salad + soda">Pizza night</button>
+              <button class="chipBtn" type="button" data-example="Salmon, quinoa, roasted broccoli, olive oil, berries">Balanced</button>
+            </div>
+
+            <div id="parseLine" class="parseLine" aria-live="polite"></div>
+          </div>
+
+          <div class="scoreCard">
+            <div class="scoreTop">
+              <div class="scoreLabel">Dinner Doctor Score</div>
+              <div class="scoreBig"><span id="ddScore">—</span><span class="scoreUnit">/100</span></div>
+            </div>
+
+            <div class="scoreSubgrid">
+              <div class="miniStat">
+                <div class="miniK">Protein Anchor</div>
+                <div class="miniV" id="miniProtein">—</div>
+              </div>
+              <div class="miniStat">
+                <div class="miniK">Fiber/Color</div>
+                <div class="miniV" id="miniFiber">—</div>
+              </div>
+              <div class="miniStat">
+                <div class="miniK">Added Sugar</div>
+                <div class="miniV" id="miniSugar">—</div>
+              </div>
+              <div class="miniStat">
+                <div class="miniK">Sodium</div>
+                <div class="miniV" id="miniSodium">—</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="bestMove">
+              <div class="bestTitle">One Best Move (80/20)</div>
+              <div id="bestMoveText" class="bestText">Enter a dinner to generate the single highest-leverage change.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="cardTitle">
+              <h2>Physiology Radar</h2>
+              <div class="badge"><span>Signal</span><strong id="signalLabel">—</strong></div>
+            </div>
+
+            <div class="canvasWrap">
+              <canvas id="radar" width="720" height="460" aria-label="Dinner Doctor physiology radar chart"></canvas>
+            </div>
+
+            <div class="hint">
+              Higher is better for Satiety and Digestion. Higher is worse for Energy Crash Risk, Cravings, and Glucose Volatility.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">
+              <h2>Ranked Readout</h2>
+              <div class="badge"><span>Mode</span><strong id="modeLabel">Standard</strong></div>
+            </div>
+
+            <table class="table" aria-label="Dinner Doctor ranked physiology readout">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Score</th>
+                  <th>Severity</th>
+                </tr>
+              </thead>
+              <tbody id="readoutBody"></tbody>
+            </table>
+
+            <div class="divider"></div>
+
+            <div class="ladder">
+              <div class="ladderTitle">Upgrade Ladder</div>
+              <div id="ladderWrap" class="ladderWrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="footLeft">
+            <span class="footBrand">Dinner Doctor</span>
+            <span class="footMuted">Local-first • No accounts • No tracking • No paid APIs</span>
+          </div>
+          <div class="footRight">
+            <button id="copyLinkBtn" class="btn ghost" type="button">Copy share link</button>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+  <script>
+    // Optional: register service worker for offline caching
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+  </script>
+</body>
+</html>
