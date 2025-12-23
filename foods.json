@@ -216,3 +216,664 @@
     "per_serving": { "p": 18, "c": 52, "f": 18, "fiber": 3, "sugar": 6, "sodium": 900, "satfat": 8, "refined": 1 }
   }
 ]
+
+
+[
+  {
+    "id": "turkey_breast",
+    "name": "Turkey breast",
+    "syn": ["turkey breast", "turkey", "sliced turkey", "deli turkey"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140, "slice": 25 },
+    "per_serving": { "p": 38, "c": 0, "f": 3, "fiber": 0, "sugar": 0, "sodium": 320, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "pork_chop",
+    "name": "Pork chop",
+    "syn": ["pork chop", "pork chops", "pork"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "piece": 170 },
+    "per_serving": { "p": 38, "c": 0, "f": 16, "fiber": 0, "sugar": 0, "sodium": 220, "satfat": 5, "refined": 0 }
+  },
+  {
+    "id": "shrimp",
+    "name": "Shrimp",
+    "syn": ["shrimp", "prawns"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "cup": 140 },
+    "per_serving": { "p": 32, "c": 1, "f": 2, "fiber": 0, "sugar": 0, "sodium": 400, "satfat": 0.5, "refined": 0 }
+  },
+  {
+    "id": "tuna_canned",
+    "name": "Canned tuna",
+    "syn": ["tuna", "canned tuna", "tuna in water", "tuna fish"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "can": 140 },
+    "per_serving": { "p": 34, "c": 0, "f": 2, "fiber": 0, "sugar": 0, "sodium": 360, "satfat": 0.5, "refined": 0 }
+  },
+  {
+    "id": "cod",
+    "name": "Cod",
+    "syn": ["cod", "cod fillet", "white fish cod"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "piece": 170 },
+    "per_serving": { "p": 36, "c": 0, "f": 2, "fiber": 0, "sugar": 0, "sodium": 150, "satfat": 0.3, "refined": 0 }
+  },
+  {
+    "id": "tilapia",
+    "name": "Tilapia",
+    "syn": ["tilapia", "tilapia fillet"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "piece": 170 },
+    "per_serving": { "p": 35, "c": 0, "f": 3, "fiber": 0, "sugar": 0, "sodium": 170, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "sardines",
+    "name": "Sardines",
+    "syn": ["sardines", "canned sardines"],
+    "serving_g": 92,
+    "units": { "serving": 92, "g": 1, "oz": 28.35, "can": 92 },
+    "per_serving": { "p": 23, "c": 0, "f": 11, "fiber": 0, "sugar": 0, "sodium": 360, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "bacon",
+    "name": "Bacon",
+    "syn": ["bacon", "pork bacon", "turkey bacon (if labeled)"],
+    "serving_g": 30,
+    "units": { "serving": 30, "g": 1, "oz": 28.35, "slice": 15 },
+    "per_serving": { "p": 8, "c": 0, "f": 12, "fiber": 0, "sugar": 0, "sodium": 520, "satfat": 4, "refined": 0.1 }
+  },
+  {
+    "id": "sausage",
+    "name": "Sausage",
+    "syn": ["sausage", "breakfast sausage", "italian sausage"],
+    "serving_g": 85,
+    "units": { "serving": 85, "g": 1, "oz": 28.35, "link": 85, "piece": 85 },
+    "per_serving": { "p": 13, "c": 2, "f": 23, "fiber": 0, "sugar": 1, "sodium": 780, "satfat": 8, "refined": 0.1 }
+  },
+  {
+    "id": "hot_dog",
+    "name": "Hot dog",
+    "syn": ["hot dog", "frank", "frankfurter"],
+    "serving_g": 55,
+    "units": { "serving": 55, "g": 1, "oz": 28.35, "piece": 55 },
+    "per_serving": { "p": 7, "c": 2, "f": 13, "fiber": 0, "sugar": 1, "sodium": 520, "satfat": 5, "refined": 0.2 }
+  },
+  {
+    "id": "tempeh",
+    "name": "Tempeh",
+    "syn": ["tempeh", "soy tempeh"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "oz": 28.35, "piece": 120 },
+    "per_serving": { "p": 20, "c": 14, "f": 11, "fiber": 8, "sugar": 2, "sodium": 15, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "edamame",
+    "name": "Edamame (shelled)",
+    "syn": ["edamame", "soybeans", "edamame beans"],
+    "serving_g": 155,
+    "units": { "serving": 155, "g": 1, "oz": 28.35, "cup": 155 },
+    "per_serving": { "p": 17, "c": 14, "f": 8, "fiber": 8, "sugar": 3, "sodium": 15, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "hummus",
+    "name": "Hummus",
+    "syn": ["hummus", "chickpea dip"],
+    "serving_g": 60,
+    "units": { "serving": 60, "g": 1, "oz": 28.35, "tbsp": 15, "cup": 240 },
+    "per_serving": { "p": 5, "c": 9, "f": 9, "fiber": 4, "sugar": 1, "sodium": 220, "satfat": 1, "refined": 0.1 }
+  },
+  {
+    "id": "oatmeal",
+    "name": "Oatmeal (cooked)",
+    "syn": ["oatmeal", "oats", "rolled oats cooked", "porridge"],
+    "serving_g": 234,
+    "units": { "serving": 234, "g": 1, "oz": 28.35, "cup": 234, "bowl": 234 },
+    "per_serving": { "p": 6, "c": 28, "f": 3, "fiber": 4, "sugar": 1, "sodium": 5, "satfat": 0.5, "refined": 0.1 }
+  },
+  {
+    "id": "greek_yogurt_plain",
+    "name": "Greek yogurt (plain)",
+    "syn": ["greek yogurt", "plain greek yogurt", "strained yogurt"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "cup": 245, "container": 170 },
+    "per_serving": { "p": 17, "c": 6, "f": 4, "fiber": 0, "sugar": 6, "sodium": 65, "satfat": 2.5, "refined": 0 }
+  },
+  {
+    "id": "yogurt_flavored",
+    "name": "Yogurt (sweetened)",
+    "syn": ["flavored yogurt", "vanilla yogurt", "strawberry yogurt", "sweetened yogurt"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "container": 170 },
+    "per_serving": { "p": 8, "c": 28, "f": 3, "fiber": 0, "sugar": 22, "sodium": 85, "satfat": 2, "refined": 1 }
+  },
+  {
+    "id": "cottage_cheese",
+    "name": "Cottage cheese",
+    "syn": ["cottage cheese"],
+    "serving_g": 210,
+    "units": { "serving": 210, "g": 1, "oz": 28.35, "cup": 210 },
+    "per_serving": { "p": 24, "c": 8, "f": 10, "fiber": 0, "sugar": 6, "sodium": 700, "satfat": 4, "refined": 0 }
+  },
+  {
+    "id": "milk_2pct",
+    "name": "Milk (2%)",
+    "syn": ["milk", "2% milk", "regular milk", "cow milk"],
+    "serving_g": 244,
+    "units": { "serving": 244, "g": 1, "oz": 28.35, "cup": 244, "glass": 244 },
+    "per_serving": { "p": 8, "c": 12, "f": 5, "fiber": 0, "sugar": 12, "sodium": 105, "satfat": 3, "refined": 0 }
+  },
+  {
+    "id": "almond_milk_unsweet",
+    "name": "Almond milk (unsweetened)",
+    "syn": ["almond milk", "unsweetened almond milk"],
+    "serving_g": 240,
+    "units": { "serving": 240, "g": 1, "oz": 28.35, "cup": 240, "glass": 240 },
+    "per_serving": { "p": 1, "c": 2, "f": 3, "fiber": 1, "sugar": 0, "sodium": 150, "satfat": 0.2, "refined": 0 }
+  },
+  {
+    "id": "cheddar_cheese",
+    "name": "Cheddar cheese",
+    "syn": ["cheddar", "cheddar cheese", "cheese cheddar"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "slice": 28, "piece": 28 },
+    "per_serving": { "p": 7, "c": 1, "f": 9, "fiber": 0, "sugar": 0, "sodium": 180, "satfat": 6, "refined": 0 }
+  },
+  {
+    "id": "mozzarella",
+    "name": "Mozzarella cheese",
+    "syn": ["mozzarella", "mozzarella cheese", "fresh mozzarella"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "slice": 28, "piece": 28 },
+    "per_serving": { "p": 6, "c": 1, "f": 6, "fiber": 0, "sugar": 0, "sodium": 170, "satfat": 4, "refined": 0 }
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "syn": ["apple", "red apple", "green apple", "gala", "fuji"],
+    "serving_g": 182,
+    "units": { "serving": 182, "g": 1, "oz": 28.35, "piece": 182 },
+    "per_serving": { "p": 0.5, "c": 25, "f": 0.3, "fiber": 4, "sugar": 19, "sodium": 2, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "banana",
+    "name": "Banana",
+    "syn": ["banana"],
+    "serving_g": 118,
+    "units": { "serving": 118, "g": 1, "oz": 28.35, "piece": 118 },
+    "per_serving": { "p": 1.3, "c": 27, "f": 0.4, "fiber": 3, "sugar": 14, "sodium": 1, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "orange",
+    "name": "Orange",
+    "syn": ["orange", "navel orange", "clementine (if large)"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140 },
+    "per_serving": { "p": 1.2, "c": 18, "f": 0.2, "fiber": 4, "sugar": 14, "sodium": 0, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "grapes",
+    "name": "Grapes",
+    "syn": ["grapes", "red grapes", "green grapes"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 150 },
+    "per_serving": { "p": 1, "c": 25, "f": 0.3, "fiber": 1, "sugar": 23, "sodium": 2, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "avocado",
+    "name": "Avocado",
+    "syn": ["avocado", "half avocado", "guacamole (basic)"],
+    "serving_g": 100,
+    "units": { "serving": 100, "g": 1, "oz": 28.35, "piece": 200, "half": 100 },
+    "per_serving": { "p": 2, "c": 9, "f": 15, "fiber": 7, "sugar": 1, "sodium": 7, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "strawberries",
+    "name": "Strawberries",
+    "syn": ["strawberries", "strawberry"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 150 },
+    "per_serving": { "p": 1, "c": 12, "f": 0.5, "fiber": 3, "sugar": 8, "sodium": 2, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "blueberries",
+    "name": "Blueberries",
+    "syn": ["blueberries", "blueberry"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 150 },
+    "per_serving": { "p": 1, "c": 21, "f": 0.5, "fiber": 4, "sugar": 15, "sodium": 2, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "spinach",
+    "name": "Spinach",
+    "syn": ["spinach", "baby spinach", "spinach leaves"],
+    "serving_g": 85,
+    "units": { "serving": 85, "g": 1, "oz": 28.35, "cup": 30, "bowl": 85 },
+    "per_serving": { "p": 3, "c": 3, "f": 0.4, "fiber": 2, "sugar": 0.5, "sodium": 65, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "kale",
+    "name": "Kale",
+    "syn": ["kale", "curly kale", "lacinato kale"],
+    "serving_g": 100,
+    "units": { "serving": 100, "g": 1, "oz": 28.35, "cup": 67 },
+    "per_serving": { "p": 3, "c": 9, "f": 1, "fiber": 3, "sugar": 2, "sodium": 30, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "carrots",
+    "name": "Carrots",
+    "syn": ["carrots", "carrot", "baby carrots"],
+    "serving_g": 128,
+    "units": { "serving": 128, "g": 1, "oz": 28.35, "cup": 128 },
+    "per_serving": { "p": 1, "c": 12, "f": 0.3, "fiber": 4, "sugar": 6, "sodium": 90, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "bell_pepper",
+    "name": "Bell pepper",
+    "syn": ["bell pepper", "red pepper", "green pepper", "yellow pepper", "sweet pepper"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "oz": 28.35, "cup": 150, "piece": 120 },
+    "per_serving": { "p": 1.5, "c": 9, "f": 0.4, "fiber": 3, "sugar": 6, "sodium": 5, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "tomato",
+    "name": "Tomato",
+    "syn": ["tomato", "tomatoes", "roma tomato", "cherry tomatoes"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 180, "piece": 150 },
+    "per_serving": { "p": 1.5, "c": 7, "f": 0.3, "fiber": 2, "sugar": 5, "sodium": 10, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "cucumber",
+    "name": "Cucumber",
+    "syn": ["cucumber", "cucumbers"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 120, "piece": 300 },
+    "per_serving": { "p": 1, "c": 6, "f": 0.2, "fiber": 1, "sugar": 3, "sodium": 5, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "zucchini",
+    "name": "Zucchini",
+    "syn": ["zucchini", "courgette"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 120, "piece": 200 },
+    "per_serving": { "p": 2, "c": 6, "f": 0.4, "fiber": 2, "sugar": 4, "sodium": 10, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "cauliflower",
+    "name": "Cauliflower",
+    "syn": ["cauliflower", "cauli", "cauliflower florets"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 107 },
+    "per_serving": { "p": 3, "c": 8, "f": 0.5, "fiber": 3, "sugar": 3, "sodium": 30, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "brussels_sprouts",
+    "name": "Brussels sprouts",
+    "syn": ["brussels sprouts", "brussel sprouts"],
+    "serving_g": 155,
+    "units": { "serving": 155, "g": 1, "oz": 28.35, "cup": 155 },
+    "per_serving": { "p": 4, "c": 12, "f": 1, "fiber": 4, "sugar": 3, "sodium": 25, "satfat": 0.1, "refined": 0 }
+  },
+  {
+    "id": "mushrooms",
+    "name": "Mushrooms",
+    "syn": ["mushrooms", "button mushrooms", "cremini", "portobello"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "oz": 28.35, "cup": 70 },
+    "per_serving": { "p": 4, "c": 4, "f": 0.5, "fiber": 1, "sugar": 2, "sodium": 10, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "sweet_potato_baked",
+    "name": "Sweet potato (baked)",
+    "syn": ["sweet potato", "baked sweet potato", "yam (as used)"],
+    "serving_g": 180,
+    "units": { "serving": 180, "g": 1, "oz": 28.35, "piece": 180 },
+    "per_serving": { "p": 4, "c": 41, "f": 0.3, "fiber": 6, "sugar": 13, "sodium": 70, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "baked_potato",
+    "name": "Baked potato",
+    "syn": ["baked potato", "potato baked"],
+    "serving_g": 200,
+    "units": { "serving": 200, "g": 1, "oz": 28.35, "piece": 200 },
+    "per_serving": { "p": 5, "c": 46, "f": 0.2, "fiber": 4, "sugar": 2, "sodium": 15, "satfat": 0, "refined": 0.4 }
+  },
+  {
+    "id": "corn",
+    "name": "Corn (cooked)",
+    "syn": ["corn", "sweet corn", "corn kernels"],
+    "serving_g": 160,
+    "units": { "serving": 160, "g": 1, "oz": 28.35, "cup": 160 },
+    "per_serving": { "p": 5, "c": 31, "f": 2, "fiber": 4, "sugar": 6, "sodium": 15, "satfat": 0.3, "refined": 0.2 }
+  },
+  {
+    "id": "peas",
+    "name": "Peas (cooked)",
+    "syn": ["peas", "green peas"],
+    "serving_g": 160,
+    "units": { "serving": 160, "g": 1, "oz": 28.35, "cup": 160 },
+    "per_serving": { "p": 9, "c": 25, "f": 0.5, "fiber": 9, "sugar": 9, "sodium": 120, "satfat": 0.1, "refined": 0 }
+  },
+  {
+    "id": "whole_wheat_bread",
+    "name": "Whole wheat bread",
+    "syn": ["whole wheat bread", "whole grain bread", "wheat bread"],
+    "serving_g": 40,
+    "units": { "serving": 40, "g": 1, "oz": 28.35, "slice": 40 },
+    "per_serving": { "p": 5, "c": 20, "f": 2, "fiber": 3, "sugar": 3, "sodium": 200, "satfat": 0.3, "refined": 0.4 }
+  },
+  {
+    "id": "bagel_plain",
+    "name": "Bagel (plain)",
+    "syn": ["bagel", "plain bagel"],
+    "serving_g": 95,
+    "units": { "serving": 95, "g": 1, "oz": 28.35, "piece": 95 },
+    "per_serving": { "p": 10, "c": 55, "f": 1.5, "fiber": 2, "sugar": 6, "sodium": 460, "satfat": 0.3, "refined": 1 }
+  },
+  {
+    "id": "tortilla_flour",
+    "name": "Flour tortilla",
+    "syn": ["flour tortilla", "tortilla", "wrap"],
+    "serving_g": 50,
+    "units": { "serving": 50, "g": 1, "oz": 28.35, "piece": 50 },
+    "per_serving": { "p": 4, "c": 26, "f": 4, "fiber": 1, "sugar": 2, "sodium": 420, "satfat": 1.5, "refined": 1 }
+  },
+  {
+    "id": "tortilla_corn",
+    "name": "Corn tortilla",
+    "syn": ["corn tortilla", "tortilla corn"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "piece": 28 },
+    "per_serving": { "p": 2, "c": 12, "f": 1, "fiber": 2, "sugar": 0, "sodium": 20, "satfat": 0.1, "refined": 0.2 }
+  },
+  {
+    "id": "peanut_butter",
+    "name": "Peanut butter",
+    "syn": ["peanut butter", "pb"],
+    "serving_g": 32,
+    "units": { "serving": 32, "g": 1, "oz": 28.35, "tbsp": 16 },
+    "per_serving": { "p": 8, "c": 7, "f": 16, "fiber": 3, "sugar": 2, "sodium": 140, "satfat": 3, "refined": 0.1 }
+  },
+  {
+    "id": "almonds",
+    "name": "Almonds",
+    "syn": ["almonds", "raw almonds", "roasted almonds"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "handful": 28 },
+    "per_serving": { "p": 6, "c": 6, "f": 14, "fiber": 4, "sugar": 1, "sodium": 0, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "walnuts",
+    "name": "Walnuts",
+    "syn": ["walnuts", "raw walnuts"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "handful": 28 },
+    "per_serving": { "p": 4, "c": 4, "f": 18, "fiber": 2, "sugar": 1, "sodium": 0, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "chia_seeds",
+    "name": "Chia seeds",
+    "syn": ["chia", "chia seeds"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "tbsp": 12 },
+    "per_serving": { "p": 5, "c": 12, "f": 9, "fiber": 10, "sugar": 0, "sodium": 5, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "flax_seeds",
+    "name": "Flaxseed (ground)",
+    "syn": ["flax", "flaxseed", "ground flax", "linseed"],
+    "serving_g": 14,
+    "units": { "serving": 14, "g": 1, "oz": 28.35, "tbsp": 7 },
+    "per_serving": { "p": 3, "c": 4, "f": 6, "fiber": 4, "sugar": 0.2, "sodium": 3, "satfat": 0.5, "refined": 0 }
+  },
+  {
+    "id": "popcorn_air_popped",
+    "name": "Popcorn (air-popped)",
+    "syn": ["popcorn", "air popped popcorn", "plain popcorn"],
+    "serving_g": 24,
+    "units": { "serving": 24, "g": 1, "oz": 28.35, "cup": 8, "bowl": 24 },
+    "per_serving": { "p": 3, "c": 15, "f": 1, "fiber": 3, "sugar": 0.2, "sodium": 2, "satfat": 0.1, "refined": 0.1 }
+  },
+  {
+    "id": "chips_potato",
+    "name": "Potato chips",
+    "syn": ["chips", "potato chips", "crisps"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "bag": 150 },
+    "per_serving": { "p": 2, "c": 15, "f": 10, "fiber": 1, "sugar": 0.2, "sodium": 180, "satfat": 1.5, "refined": 0.6 }
+  },
+  {
+    "id": "pretzels",
+    "name": "Pretzels",
+    "syn": ["pretzels", "pretzel sticks", "pretzel"],
+    "serving_g": 28,
+    "units": { "serving": 28, "g": 1, "oz": 28.35, "cup": 60 },
+    "per_serving": { "p": 3, "c": 23, "f": 1, "fiber": 1, "sugar": 1, "sodium": 450, "satfat": 0.2, "refined": 1 }
+  },
+  {
+    "id": "ketchup",
+    "name": "Ketchup",
+    "syn": ["ketchup", "tomato ketchup"],
+    "serving_g": 17,
+    "units": { "serving": 17, "g": 1, "oz": 28.35, "tbsp": 17, "tsp": 5 },
+    "per_serving": { "p": 0, "c": 5, "f": 0, "fiber": 0, "sugar": 4, "sodium": 160, "satfat": 0, "refined": 1 }
+  },
+  {
+    "id": "mayonnaise",
+    "name": "Mayonnaise",
+    "syn": ["mayonnaise", "mayo"],
+    "serving_g": 14,
+    "units": { "serving": 14, "g": 1, "oz": 28.35, "tbsp": 14, "tsp": 5 },
+    "per_serving": { "p": 0, "c": 0, "f": 10, "fiber": 0, "sugar": 0, "sodium": 90, "satfat": 1.5, "refined": 0.1 }
+  },
+  {
+    "id": "ranch_dressing",
+    "name": "Ranch dressing",
+    "syn": ["ranch", "ranch dressing"],
+    "serving_g": 30,
+    "units": { "serving": 30, "g": 1, "oz": 28.35, "tbsp": 15 },
+    "per_serving": { "p": 0.5, "c": 2, "f": 13, "fiber": 0, "sugar": 1, "sodium": 260, "satfat": 2, "refined": 0.1 }
+  },
+  {
+    "id": "vinaigrette",
+    "name": "Vinaigrette dressing",
+    "syn": ["vinaigrette", "italian dressing", "oil and vinegar dressing"],
+    "serving_g": 30,
+    "units": { "serving": 30, "g": 1, "oz": 28.35, "tbsp": 15 },
+    "per_serving": { "p": 0, "c": 2, "f": 12, "fiber": 0, "sugar": 1, "sodium": 220, "satfat": 1.5, "refined": 0.2 }
+  },
+  {
+    "id": "soy_sauce",
+    "name": "Soy sauce",
+    "syn": ["soy sauce", "shoyu"],
+    "serving_g": 18,
+    "units": { "serving": 18, "g": 1, "oz": 28.35, "tbsp": 18, "tsp": 5 },
+    "per_serving": { "p": 2, "c": 1, "f": 0, "fiber": 0, "sugar": 0.1, "sodium": 900, "satfat": 0, "refined": 0.1 }
+  },
+  {
+    "id": "salsa",
+    "name": "Salsa",
+    "syn": ["salsa", "tomato salsa", "pico de gallo (basic)"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "oz": 28.35, "cup": 240, "tbsp": 15 },
+    "per_serving": { "p": 2, "c": 10, "f": 0.3, "fiber": 2, "sugar": 6, "sodium": 500, "satfat": 0, "refined": 0.1 }
+  },
+  {
+    "id": "orange_juice",
+    "name": "Orange juice",
+    "syn": ["orange juice", "oj"],
+    "serving_g": 240,
+    "units": { "serving": 240, "g": 1, "oz": 28.35, "cup": 240, "glass": 240 },
+    "per_serving": { "p": 2, "c": 26, "f": 0, "fiber": 0, "sugar": 21, "sodium": 5, "satfat": 0, "refined": 0.8 }
+  },
+  {
+    "id": "coffee_black",
+    "name": "Coffee (black)",
+    "syn": ["coffee", "black coffee", "drip coffee", "americano (plain)"],
+    "serving_g": 240,
+    "units": { "serving": 240, "g": 1, "oz": 28.35, "cup": 240, "mug": 240 },
+    "per_serving": { "p": 0, "c": 0, "f": 0, "fiber": 0, "sugar": 0, "sodium": 5, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "latte",
+    "name": "Latte",
+    "syn": ["latte", "caffe latte", "milk coffee"],
+    "serving_g": 355,
+    "units": { "serving": 355, "g": 1, "oz": 28.35, "cup": 355 },
+    "per_serving": { "p": 12, "c": 18, "f": 8, "fiber": 0, "sugar": 18, "sodium": 150, "satfat": 5, "refined": 0.2 }
+  },
+  {
+    "id": "energy_drink",
+    "name": "Energy drink (sugary)",
+    "syn": ["energy drink", "red bull", "monster", "rockstar"],
+    "serving_g": 473,
+    "units": { "serving": 473, "g": 1, "oz": 28.35, "can": 473, "cup": 240 },
+    "per_serving": { "p": 0, "c": 54, "f": 0, "fiber": 0, "sugar": 54, "sodium": 200, "satfat": 0, "refined": 1 }
+  },
+  {
+    "id": "chocolate_bar",
+    "name": "Chocolate bar",
+    "syn": ["chocolate bar", "milk chocolate", "candy bar chocolate"],
+    "serving_g": 45,
+    "units": { "serving": 45, "g": 1, "oz": 28.35, "piece": 45, "bar": 45 },
+    "per_serving": { "p": 3, "c": 26, "f": 13, "fiber": 2, "sugar": 24, "sodium": 35, "satfat": 8, "refined": 1 }
+  },
+  {
+    "id": "cookies",
+    "name": "Cookies",
+    "syn": ["cookies", "cookie", "chocolate chip cookies"],
+    "serving_g": 40,
+    "units": { "serving": 40, "g": 1, "oz": 28.35, "piece": 20, "cookie": 20 },
+    "per_serving": { "p": 2, "c": 24, "f": 10, "fiber": 1, "sugar": 14, "sodium": 180, "satfat": 4, "refined": 1 }
+  },
+  {
+    "id": "donut",
+    "name": "Donut",
+    "syn": ["donut", "doughnut", "glazed donut"],
+    "serving_g": 70,
+    "units": { "serving": 70, "g": 1, "oz": 28.35, "piece": 70 },
+    "per_serving": { "p": 4, "c": 32, "f": 16, "fiber": 1, "sugar": 14, "sodium": 320, "satfat": 6, "refined": 1 }
+  },
+  {
+    "id": "brownie",
+    "name": "Brownie",
+    "syn": ["brownie", "fudge brownie"],
+    "serving_g": 60,
+    "units": { "serving": 60, "g": 1, "oz": 28.35, "piece": 60 },
+    "per_serving": { "p": 3, "c": 34, "f": 12, "fiber": 2, "sugar": 24, "sodium": 160, "satfat": 5, "refined": 1 }
+  },
+  {
+    "id": "croissant",
+    "name": "Croissant",
+    "syn": ["croissant", "butter croissant"],
+    "serving_g": 57,
+    "units": { "serving": 57, "g": 1, "oz": 28.35, "piece": 57 },
+    "per_serving": { "p": 6, "c": 26, "f": 12, "fiber": 1, "sugar": 6, "sodium": 330, "satfat": 7, "refined": 1 }
+  },
+  {
+    "id": "cereal_sugary",
+    "name": "Cereal (sugary)",
+    "syn": ["cereal", "sweet cereal", "kids cereal", "frosted cereal"],
+    "serving_g": 55,
+    "units": { "serving": 55, "g": 1, "oz": 28.35, "cup": 55, "bowl": 55 },
+    "per_serving": { "p": 4, "c": 45, "f": 3, "fiber": 2, "sugar": 18, "sodium": 260, "satfat": 0.5, "refined": 1 }
+  },
+  {
+    "id": "cereal_wholegrain",
+    "name": "Cereal (whole grain, low sugar)",
+    "syn": ["whole grain cereal", "bran cereal", "high fiber cereal", "unsweet cereal"],
+    "serving_g": 55,
+    "units": { "serving": 55, "g": 1, "oz": 28.35, "cup": 55, "bowl": 55 },
+    "per_serving": { "p": 6, "c": 35, "f": 2, "fiber": 8, "sugar": 6, "sodium": 180, "satfat": 0.3, "refined": 0.4 }
+  },
+  {
+    "id": "protein_bar",
+    "name": "Protein bar",
+    "syn": ["protein bar", "bar protein", "quest bar", "clif builder bar"],
+    "serving_g": 60,
+    "units": { "serving": 60, "g": 1, "oz": 28.35, "piece": 60, "bar": 60 },
+    "per_serving": { "p": 20, "c": 22, "f": 7, "fiber": 8, "sugar": 7, "sodium": 210, "satfat": 3, "refined": 0.4 }
+  },
+  {
+    "id": "granola",
+    "name": "Granola",
+    "syn": ["granola", "oat granola", "crunchy granola"],
+    "serving_g": 60,
+    "units": { "serving": 60, "g": 1, "oz": 28.35, "cup": 120, "bowl": 60 },
+    "per_serving": { "p": 6, "c": 35, "f": 10, "fiber": 5, "sugar": 12, "sodium": 80, "satfat": 2, "refined": 0.8 }
+  },
+  {
+    "id": "pancakes",
+    "name": "Pancakes",
+    "syn": ["pancakes", "pancake", "stack of pancakes"],
+    "serving_g": 160,
+    "units": { "serving": 160, "g": 1, "oz": 28.35, "piece": 80, "stack": 160 },
+    "per_serving": { "p": 8, "c": 60, "f": 10, "fiber": 2, "sugar": 10, "sodium": 650, "satfat": 2.5, "refined": 1 }
+  },
+  {
+    "id": "waffle",
+    "name": "Waffle",
+    "syn": ["waffle", "waffles"],
+    "serving_g": 85,
+    "units": { "serving": 85, "g": 1, "oz": 28.35, "piece": 85 },
+    "per_serving": { "p": 6, "c": 34, "f": 8, "fiber": 1, "sugar": 7, "sodium": 360, "satfat": 2, "refined": 1 }
+  },
+  {
+    "id": "grilled_cheese",
+    "name": "Grilled cheese sandwich",
+    "syn": ["grilled cheese", "cheese sandwich grilled"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "piece": 170, "sandwich": 170 },
+    "per_serving": { "p": 16, "c": 30, "f": 22, "fiber": 2, "sugar": 5, "sodium": 900, "satfat": 11, "refined": 1 }
+  },
+  {
+    "id": "taco_beef",
+    "name": "Beef taco",
+    "syn": ["taco", "beef taco", "ground beef taco"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140 },
+    "per_serving": { "p": 14, "c": 24, "f": 16, "fiber": 3, "sugar": 2, "sodium": 720, "satfat": 6, "refined": 0.6 }
+  },
+  {
+    "id": "burrito",
+    "name": "Burrito",
+    "syn": ["burrito", "bean burrito", "chicken burrito", "beef burrito"],
+    "serving_g": 320,
+    "units": { "serving": 320, "g": 1, "oz": 28.35, "piece": 320 },
+    "per_serving": { "p": 28, "c": 70, "f": 20, "fiber": 10, "sugar": 6, "sodium": 1400, "satfat": 8, "refined": 1 }
+  },
+  {
+    "id": "sushi_roll",
+    "name": "Sushi roll",
+    "syn": ["sushi", "sushi roll", "california roll", "spicy tuna roll"],
+    "serving_g": 200,
+    "units": { "serving": 200, "g": 1, "oz": 28.35, "roll": 200, "piece": 25 },
+    "per_serving": { "p": 12, "c": 48, "f": 7, "fiber": 2, "sugar": 6, "sodium": 700, "satfat": 1, "refined": 0.8 }
+  },
+  {
+    "id": "fried_rice",
+    "name": "Fried rice",
+    "syn": ["fried rice", "egg fried rice", "chicken fried rice"],
+    "serving_g": 240,
+    "units": { "serving": 240, "g": 1, "oz": 28.35, "cup": 240, "bowl": 240 },
+    "per_serving": { "p": 10, "c": 52, "f": 14, "fiber": 2, "sugar": 3, "sodium": 950, "satfat": 3, "refined": 1 }
+  },
+  {
+    "id": "ramen",
+    "name": "Ramen (instant)",
+    "syn": ["ramen", "instant ramen", "ramen noodles"],
+    "serving_g": 85,
+    "units": { "serving": 85, "g": 1, "oz": 28.35, "pack": 85, "bowl": 85 },
+    "per_serving": { "p": 9, "c": 54, "f": 14, "fiber": 2, "sugar": 2, "sodium": 1600, "satfat": 7, "refined": 1 }
+  },
+  {
+    "id": "mac_and_cheese",
+    "name": "Mac and cheese",
+    "syn": ["mac and cheese", "macaroni and cheese", "kraft mac and cheese"],
+    "serving_g": 220,
+    "units": { "serving": 220, "g": 1, "oz": 28.35, "cup": 220, "bowl": 220 },
+    "per_serving": { "p": 14, "c": 42, "f": 18, "fiber": 2, "sugar": 6, "sodium": 900, "satfat": 9, "refined": 1 }
+  }
+]
+
