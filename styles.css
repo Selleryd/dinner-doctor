@@ -1,8 +1,6 @@
 :root{
   --bg0:#070A12;
   --bg1:#0B1224;
-  --panel: rgba(12, 18, 40, .62);
-  --panel2: rgba(12, 18, 40, .35);
   --stroke: rgba(120, 190, 255, .22);
   --stroke2: rgba(120, 190, 255, .12);
   --text:#EAF2FF;
@@ -132,6 +130,7 @@ h1{margin:0;font-weight:780;font-size:26px;letter-spacing:.02em;}
   color: var(--text);
 }
 .btn.ghost:hover{background: rgba(255,255,255,.08);}
+.btn.sm{padding:8px 10px;border-radius:12px;font-size:12px;font-weight:900;}
 
 .toggles{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
 .toggle{
@@ -168,6 +167,109 @@ h1{margin:0;font-weight:780;font-size:26px;letter-spacing:.02em;}
   font-size: 13px;
   line-height: 1.35;
   min-height: 18px;
+}
+
+.hidden{display:none !important;}
+
+/* Portion panel */
+.portionCard{
+  margin-top: 12px;
+  border-radius: 16px;
+  background: rgba(5,8,18,.38);
+  border: 1px solid rgba(255,255,255,.10);
+  padding: 12px;
+}
+.portionHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+}
+.portionTitle{
+  font-weight: 950;
+  letter-spacing:.02em;
+}
+.portionSub{
+  margin-top:4px;
+  color: var(--muted2);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.portionRows{
+  margin-top: 10px;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.pRow{
+  display:grid;
+  grid-template-columns: 1.2fr .55fr .75fr .9fr;
+  gap: 10px;
+  align-items:center;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+@media (max-width: 980px){
+  .pRow{grid-template-columns: 1fr 1fr; }
+}
+.pName{
+  font-weight: 900;
+  line-height: 1.25;
+}
+.pMeta{
+  color: var(--muted2);
+  font-size: 12px;
+  margin-top: 2px;
+}
+.pCell{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.pLabel{
+  color: var(--muted2);
+  font-size: 11px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+.pInput, .pSelect{
+  width:100%;
+  padding: 10px 10px;
+  border-radius: 12px;
+  background: rgba(5,8,18,.55);
+  border: 1px solid rgba(255,255,255,.10);
+  color: var(--text);
+  outline:none;
+  font-weight: 800;
+}
+.pSelect{cursor:pointer;}
+
+.pTag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  color: var(--muted);
+  width: fit-content;
+}
+.pDot{
+  width:8px;height:8px;border-radius:999px;background: var(--cyan);
+  box-shadow: 0 0 14px rgba(121,198,255,.35);
+}
+
+.portionActions{
+  display:flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
 }
 
 .scoreTop{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;}
@@ -255,8 +357,8 @@ canvas{
   font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:11px;
 }
 
-.metric{display:flex;align-items:center;gap:10px;}
-.chip{width:10px;height:10px;border-radius:999px;background:var(--cyan);box-shadow:0 0 14px rgba(121,198,255,.35);flex:0 0 auto;}
+.metric{display:flex;align-items:flex-start;gap:10px;}
+.chip{width:10px;height:10px;border-radius:999px;background:var(--cyan);box-shadow:0 0 14px rgba(121,198,255,.35);flex:0 0 auto;margin-top:4px;}
 .score{font-variant-numeric:tabular-nums;font-weight:900;}
 .sev{color:var(--muted);font-size:12px;}
 .bar{
