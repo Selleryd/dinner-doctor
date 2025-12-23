@@ -1,11 +1,12 @@
 "use strict";
 
-const CACHE = "dinner-doctor-v1";
+const CACHE = "dinner-doctor-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./foods.json"
 ];
 
 self.addEventListener("install", (e) => {
