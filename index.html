@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dinner Doctor</title>
   <link rel="stylesheet" href="./styles.css" />
-  <meta name="description" content="Dinner Doctor: a futuristic dietitian-style physiology readout for your dinner—no accounts, no tracking, no APIs." />
+  <meta name="description" content="Dinner Doctor: a futuristic dietitian-style physiology readout for your dinner—private, free, no paid APIs." />
 </head>
 <body>
   <div class="wrap">
@@ -13,10 +13,10 @@
       <div class="title">
         <div class="kicker">Dinner Doctor • Physiology Readout</div>
         <h1>What are you having for dinner?</h1>
-        <p class="sub">Type your dinner like a human. Dinner Doctor returns a futuristic “how you’ll feel” chart plus the single best upgrade (no accounts, no tracking, no paid APIs).</p>
+        <p class="sub">Type dinner like a human. Then confirm portions (quick). Dinner Doctor returns a futuristic “how you’ll feel” physiology chart + the single best upgrade (no accounts, no tracking, no paid APIs).</p>
       </div>
 
-      <div class="pill" title="Local-first. No server required.">
+      <div class="pill" title="Local-first. No paid APIs.">
         <span class="dot"></span>
         <span>Local-first • Free • Private</span>
       </div>
@@ -27,8 +27,9 @@
         <div class="topGrid">
           <div class="inputCard">
             <label class="label" for="mealInput">Dinner (plain text)</label>
+
             <div class="inputRow">
-              <input id="mealInput" class="input" placeholder="Example: salmon, rice, broccoli, and ice cream" autocomplete="off" />
+              <input id="mealInput" class="input" placeholder="Example: salmon, mashed potatoes, asparagus, diet coke, cake" autocomplete="off" />
               <button id="analyzeBtn" class="btn primary" type="button">Analyze</button>
             </div>
 
@@ -49,6 +50,24 @@
             </div>
 
             <div id="parseLine" class="parseLine" aria-live="polite"></div>
+
+            <!-- Portion Review (seamless) -->
+            <div id="portionCard" class="portionCard hidden" aria-live="polite">
+              <div class="portionHeader">
+                <div>
+                  <div class="portionTitle">Portion check</div>
+                  <div class="portionSub">Quickly confirm portions for accuracy. If an item is unknown, pick a category and we’ll still score it correctly.</div>
+                </div>
+                <button id="portionClose" class="btn ghost sm" type="button">Hide</button>
+              </div>
+
+              <div id="portionRows" class="portionRows"></div>
+
+              <div class="portionActions">
+                <button id="portionScan" class="btn primary" type="button">Run scan</button>
+                <button id="portionBack" class="btn ghost" type="button">Edit dinner text</button>
+              </div>
+            </div>
           </div>
 
           <div class="scoreCard">
@@ -80,7 +99,7 @@
 
             <div class="bestMove">
               <div class="bestTitle">One Best Move (80/20)</div>
-              <div id="bestMoveText" class="bestText">Enter a dinner to generate the single highest-leverage change.</div>
+              <div id="bestMoveText" class="bestText">Enter a dinner, confirm portions, and Dinner Doctor will generate the single highest-leverage change.</div>
             </div>
           </div>
         </div>
@@ -142,7 +161,6 @@
 
   <script src="./app.js"></script>
   <script>
-    // Optional: register service worker for offline caching
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./sw.js").catch(()=>{});
     }
