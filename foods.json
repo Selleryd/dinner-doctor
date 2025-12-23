@@ -1,0 +1,218 @@
+[
+  {
+    "id": "salmon",
+    "name": "Salmon",
+    "syn": ["salmon", "atlantic salmon", "fish salmon"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140 },
+    "per_serving": { "p": 28, "c": 0, "f": 12, "fiber": 0, "sugar": 0, "sodium": 120, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "chicken_breast",
+    "name": "Chicken breast",
+    "syn": ["chicken breast", "grilled chicken", "chicken"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140 },
+    "per_serving": { "p": 40, "c": 0, "f": 4, "fiber": 0, "sugar": 0, "sodium": 160, "satfat": 1, "refined": 0 }
+  },
+  {
+    "id": "chicken_thigh",
+    "name": "Chicken thighs",
+    "syn": ["chicken thigh", "chicken thighs"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "oz": 28.35, "piece": 140 },
+    "per_serving": { "p": 32, "c": 0, "f": 14, "fiber": 0, "sugar": 0, "sodium": 220, "satfat": 3, "refined": 0 }
+  },
+  {
+    "id": "steak",
+    "name": "Steak",
+    "syn": ["steak", "beef steak", "sirloin", "ribeye", "beef"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "piece": 170 },
+    "per_serving": { "p": 42, "c": 0, "f": 18, "fiber": 0, "sugar": 0, "sodium": 260, "satfat": 7, "refined": 0 }
+  },
+  {
+    "id": "ground_beef_burger",
+    "name": "Burger patty",
+    "syn": ["burger", "hamburger", "burger patty", "cheeseburger patty"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "piece": 150 },
+    "per_serving": { "p": 30, "c": 0, "f": 20, "fiber": 0, "sugar": 0, "sodium": 350, "satfat": 8, "refined": 0 }
+  },
+  {
+    "id": "eggs",
+    "name": "Eggs",
+    "syn": ["egg", "eggs", "omelet", "scrambled eggs"],
+    "serving_g": 100,
+    "units": { "serving": 100, "g": 1, "oz": 28.35, "piece": 50 },
+    "per_serving": { "p": 12, "c": 1, "f": 10, "fiber": 0, "sugar": 0, "sodium": 140, "satfat": 3, "refined": 0 }
+  },
+  {
+    "id": "tofu",
+    "name": "Tofu",
+    "syn": ["tofu", "firm tofu", "extra firm tofu"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 150 },
+    "per_serving": { "p": 18, "c": 5, "f": 11, "fiber": 2, "sugar": 1, "sodium": 220, "satfat": 1.5, "refined": 0 }
+  },
+  {
+    "id": "beans",
+    "name": "Beans (cooked)",
+    "syn": ["beans", "black beans", "pinto beans", "kidney beans", "chickpeas", "garbanzo", "lentils"],
+    "serving_g": 170,
+    "units": { "serving": 170, "g": 1, "oz": 28.35, "cup": 170 },
+    "per_serving": { "p": 14, "c": 32, "f": 2, "fiber": 12, "sugar": 2, "sodium": 40, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "white_rice",
+    "name": "White rice (cooked)",
+    "syn": ["white rice", "rice"],
+    "serving_g": 160,
+    "units": { "serving": 160, "g": 1, "oz": 28.35, "cup": 160 },
+    "per_serving": { "p": 4, "c": 45, "f": 0.5, "fiber": 1, "sugar": 0, "sodium": 5, "satfat": 0, "refined": 1 }
+  },
+  {
+    "id": "brown_rice",
+    "name": "Brown rice (cooked)",
+    "syn": ["brown rice"],
+    "serving_g": 160,
+    "units": { "serving": 160, "g": 1, "oz": 28.35, "cup": 160 },
+    "per_serving": { "p": 4, "c": 45, "f": 1.5, "fiber": 4, "sugar": 0, "sodium": 5, "satfat": 0, "refined": 0.4 }
+  },
+  {
+    "id": "quinoa",
+    "name": "Quinoa (cooked)",
+    "syn": ["quinoa"],
+    "serving_g": 185,
+    "units": { "serving": 185, "g": 1, "oz": 28.35, "cup": 185 },
+    "per_serving": { "p": 8, "c": 39, "f": 4, "fiber": 5, "sugar": 1, "sodium": 10, "satfat": 0.5, "refined": 0.2 }
+  },
+  {
+    "id": "pasta",
+    "name": "Pasta (cooked)",
+    "syn": ["pasta", "spaghetti", "penne", "macaroni", "noodles"],
+    "serving_g": 180,
+    "units": { "serving": 180, "g": 1, "oz": 28.35, "cup": 180 },
+    "per_serving": { "p": 8, "c": 48, "f": 2, "fiber": 2, "sugar": 2, "sodium": 150, "satfat": 0.3, "refined": 1 }
+  },
+  {
+    "id": "mashed_potatoes",
+    "name": "Mashed potatoes",
+    "syn": ["mashed potatoes", "mashed potato", "potatoes", "potato"],
+    "serving_g": 210,
+    "units": { "serving": 210, "g": 1, "oz": 28.35, "cup": 210 },
+    "per_serving": { "p": 4, "c": 35, "f": 8, "fiber": 3, "sugar": 3, "sodium": 350, "satfat": 2, "refined": 0.6 }
+  },
+  {
+    "id": "fries",
+    "name": "French fries",
+    "syn": ["fries", "french fries"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "oz": 28.35, "cup": 120 },
+    "per_serving": { "p": 4, "c": 40, "f": 18, "fiber": 4, "sugar": 1, "sodium": 350, "satfat": 3, "refined": 0.8 }
+  },
+  {
+    "id": "bread",
+    "name": "Bread",
+    "syn": ["bread", "roll", "bun", "toast"],
+    "serving_g": 40,
+    "units": { "serving": 40, "g": 1, "oz": 28.35, "slice": 40 },
+    "per_serving": { "p": 4, "c": 22, "f": 2, "fiber": 2, "sugar": 3, "sodium": 220, "satfat": 0.3, "refined": 1 }
+  },
+  {
+    "id": "broccoli",
+    "name": "Broccoli",
+    "syn": ["broccoli"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 90 },
+    "per_serving": { "p": 4, "c": 10, "f": 1, "fiber": 5, "sugar": 2, "sodium": 50, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "asparagus",
+    "name": "Asparagus",
+    "syn": ["asparagus"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "oz": 28.35, "cup": 135 },
+    "per_serving": { "p": 4, "c": 8, "f": 0.5, "fiber": 4, "sugar": 3, "sodium": 20, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "salad",
+    "name": "Salad (mixed greens)",
+    "syn": ["salad", "mixed greens", "greens"],
+    "serving_g": 120,
+    "units": { "serving": 120, "g": 1, "cup": 60 },
+    "per_serving": { "p": 2, "c": 8, "f": 0.5, "fiber": 3, "sugar": 2, "sodium": 40, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "caesar_salad",
+    "name": "Caesar salad",
+    "syn": ["caesar salad", "caesar"],
+    "serving_g": 250,
+    "units": { "serving": 250, "g": 1, "bowl": 250, "cup": 250 },
+    "per_serving": { "p": 8, "c": 14, "f": 18, "fiber": 3, "sugar": 3, "sodium": 500, "satfat": 4, "refined": 0.4 }
+  },
+  {
+    "id": "olive_oil",
+    "name": "Olive oil",
+    "syn": ["olive oil"],
+    "serving_g": 14,
+    "units": { "serving": 14, "g": 1, "tbsp": 14, "tsp": 5 },
+    "per_serving": { "p": 0, "c": 0, "f": 14, "fiber": 0, "sugar": 0, "sodium": 0, "satfat": 2, "refined": 0 }
+  },
+  {
+    "id": "butter",
+    "name": "Butter",
+    "syn": ["butter"],
+    "serving_g": 14,
+    "units": { "serving": 14, "g": 1, "tbsp": 14, "tsp": 5 },
+    "per_serving": { "p": 0, "c": 0, "f": 11, "fiber": 0, "sugar": 0, "sodium": 90, "satfat": 7, "refined": 0 }
+  },
+  {
+    "id": "berries",
+    "name": "Berries",
+    "syn": ["berries", "strawberries", "blueberries", "raspberries", "blackberries"],
+    "serving_g": 150,
+    "units": { "serving": 150, "g": 1, "cup": 150 },
+    "per_serving": { "p": 1, "c": 18, "f": 0.5, "fiber": 5, "sugar": 10, "sodium": 5, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "soda",
+    "name": "Sugary soda",
+    "syn": ["soda", "coke", "cola", "pepsi", "sprite"],
+    "serving_g": 355,
+    "units": { "serving": 355, "g": 1, "can": 355, "cup": 240, "bottle": 500 },
+    "per_serving": { "p": 0, "c": 39, "f": 0, "fiber": 0, "sugar": 39, "sodium": 40, "satfat": 0, "refined": 1 }
+  },
+  {
+    "id": "diet_soda",
+    "name": "Diet soda",
+    "syn": ["diet soda", "diet coke", "zero sugar soda", "coke zero"],
+    "serving_g": 355,
+    "units": { "serving": 355, "g": 1, "can": 355, "cup": 240, "bottle": 500 },
+    "per_serving": { "p": 0, "c": 0, "f": 0, "fiber": 0, "sugar": 0, "sodium": 40, "satfat": 0, "refined": 0 }
+  },
+  {
+    "id": "cake",
+    "name": "Cake",
+    "syn": ["cake", "slice of cake"],
+    "serving_g": 90,
+    "units": { "serving": 90, "g": 1, "slice": 90, "piece": 90 },
+    "per_serving": { "p": 3, "c": 45, "f": 12, "fiber": 1, "sugar": 28, "sodium": 200, "satfat": 6, "refined": 1 }
+  },
+  {
+    "id": "ice_cream",
+    "name": "Ice cream",
+    "syn": ["ice cream"],
+    "serving_g": 130,
+    "units": { "serving": 130, "g": 1, "cup": 130, "scoop": 65 },
+    "per_serving": { "p": 4, "c": 35, "f": 14, "fiber": 0, "sugar": 28, "sodium": 140, "satfat": 8, "refined": 1 }
+  },
+  {
+    "id": "pizza_pepperoni",
+    "name": "Pepperoni pizza",
+    "syn": ["pepperoni pizza", "pizza", "slice pizza", "pizza slice"],
+    "serving_g": 140,
+    "units": { "serving": 140, "g": 1, "slice": 140, "piece": 140 },
+    "per_serving": { "p": 18, "c": 52, "f": 18, "fiber": 3, "sugar": 6, "sodium": 900, "satfat": 8, "refined": 1 }
+  }
+]
